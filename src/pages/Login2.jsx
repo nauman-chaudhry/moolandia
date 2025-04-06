@@ -39,7 +39,7 @@ function Login() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
+        const response = await axios.get("/api/season-images");
         if (response.data.success && response.data.images.length > 0) {
           // Look for an image flagged as background; otherwise, default to the first image
           const bgImage =

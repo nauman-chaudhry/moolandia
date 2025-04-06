@@ -24,7 +24,7 @@ function App() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
+        const response = await axios.get("/api/season-images");
         if (response.data.success) {
           // Find the image that is set as the background
           const bgImage = response.data.images.find((img) => img.isBackground);

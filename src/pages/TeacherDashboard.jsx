@@ -475,7 +475,7 @@ const TeacherDashboard = () => {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await fetch("https://moolandia-mern-app.onrender.com/api/season-images");
+        const response = await fetch("/api/season-images");
         const data = await response.json();
         if (data.success && data.images.length > 0) {
           const bgImage =

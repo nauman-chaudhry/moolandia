@@ -52,10 +52,10 @@ function Login() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
+        const response = await axios.get("/api/season-images");
         if (response.data.success && response.data.images.length > 0) {
           const bgImage = response.data.images.find((img) => img.isBackground) || response.data.images[0];
-          const imageUrl = `https://moolandia-mern-app.onrender.com${bgImage.path || bgImage.imagePath}`;
+          const imageUrl = `${process.env.REACT_APP_API_BASE_URL}${bgImage.path || bgImage.imagePath}`;
           setBg(imageUrl);
         }
       } catch (err) {
