@@ -23,7 +23,7 @@ const SeasonImageManager = () => {
     const formData = new FormData();
     formData.append('seasonImage', selectedFile);
     try {
-      const response = await axios.post('http://localhost:5000/api/season-images', formData, {
+      const response = await axios.post('https://moolandia-mern-app.onrender.com/api/season-images', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (response.data.success) {
@@ -42,7 +42,7 @@ const SeasonImageManager = () => {
   // Fetch the list of images from the backend
   const fetchImages = async () => {
     try {
-      const response = await axios.get('http://localhost:5000/api/season-images');
+      const response = await axios.get('https://moolandia-mern-app.onrender.com/api/season-images');
       if (response.data.success) {
         setImages(response.data.images);
       }
@@ -62,7 +62,7 @@ const SeasonImageManager = () => {
     // Persist the background image in localStorage for all pages
     localStorage.setItem('backgroundImage', imgPath);
     // Set the background of the page (document body)
-    document.body.style.backgroundImage = `url(http://localhost:5000${imgPath})`;
+    document.body.style.backgroundImage = `url(https://moolandia-mern-app.onrender.com${imgPath})`;
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundRepeat = 'no-repeat';
     // Close the modal once an image is selected
@@ -70,7 +70,7 @@ const SeasonImageManager = () => {
 
     // Update the backend to mark this image as the background
     try {
-      const response = await axios.patch('http://localhost:5000/api/season-images/set-background', { imagePath: imgPath });
+      const response = await axios.patch('https://moolandia-mern-app.onrender.com/api/season-images/set-background', { imagePath: imgPath });
       console.log(response.data.message);
     } catch (error) {
       console.error('Error updating background in backend:', error);
@@ -81,7 +81,7 @@ const SeasonImageManager = () => {
   const handleDeleteImage = async (id) => {
     if (!window.confirm('Are you sure you want to delete this image?')) return;
     try {
-      const response = await axios.delete(`http://localhost:5000/api/season-images/${id}`);
+      const response = await axios.delete(`https://moolandia-mern-app.onrender.com/api/season-images/${id}`);
       if (response.data.success) {
         fetchImages(); // Refresh the image list after deletion
       } else {
@@ -216,7 +216,7 @@ const SeasonImageManager = () => {
           <div className="background-preview">
             <h3>Current Background Preview:</h3>
             <img
-              src={`http://localhost:5000${backgroundImage}`}
+              src={`https://moolandia-mern-app.onrender.com${backgroundImage}`}
               alt="Current Background"
             />
           </div>
@@ -231,7 +231,7 @@ const SeasonImageManager = () => {
                 {images.map((img, index) => (
                   <div key={index} className="image-item">
                     <img
-                      src={`http://localhost:5000${img.imagePath || img.path}`}
+                      src={`https://moolandia-mern-app.onrender.com${img.imagePath || img.path}`}
                       alt="Option"
                       onClick={() => handleSelectBackground(img.imagePath || img.path)}
                     />
