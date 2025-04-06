@@ -197,9 +197,9 @@ function Login() {
             transition={{ duration: 1 }}
             className="bg-transparent p-8 rounded-3xl shadow-lg border-2 border-yellow-400 relative"
             style={{
-              boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
+              //boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
               width: isMobile ? "90%" : "auto",
-              marginLeft: isMobile ? "0" : "690px"
+              marginLeft: isMobile ? "0" : "0px"
             }}
           >
 
@@ -208,6 +208,7 @@ function Login() {
             style={{
               textShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
               fontFamily: "'Cinzel', serif",
+              marginLeft: isMobile ? "0" : "690px",
             }}
           >
             {role === "teacher" ? "Teacher Login" : "Student Login"}
