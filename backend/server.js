@@ -13,7 +13,7 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "https://moolandia.netlify.app/", // Allow requests from your frontend
+  origin: "https://moolandia.netlify.app", // Allow requests from your frontend
   credentials: true,
 }));
 app.use(express.json());
