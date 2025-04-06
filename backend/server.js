@@ -37,7 +37,7 @@ app.use("/api/marketplace", require("./routes/marketplace"));
 app.use("/api/transactions", require("./routes/transactions"));
 app.use("/api/classes", require("./routes/classes"));
 app.use("/api/levelConfig", require("./routes/levelConfig"));
-app.use("/api/season-images", require("./routes/seasonimages"));
+app.use("/api/season-images", require("./routes/seasonImages"));
 
 // Start Server
 app.listen(PORT, () => {
