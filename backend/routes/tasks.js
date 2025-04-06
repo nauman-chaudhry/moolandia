@@ -1,6 +1,7 @@
 const express = require("express");
 const Task = require("../models/Task");
 const Student = require("../models/Student");
+const LevelConfig = require("../models/LevelConfig");
 const router = express.Router();
 const axios = require("axios");
 
@@ -38,20 +39,39 @@ router.get("/pending", async (req, res) => {
 });
 
 // Assign a task to a student
+// Assign a task to multiple students
 router.put("/:id/assign", async (req, res) => {
-  const { studentId } = req.body;
+  const { studentIds } = req.body; // Expect an array of student IDs
 
   try {
     const task = await Task.findById(req.params.id);
-    const student = await Student.findById(studentId);
 
-    if (!task || !student) {
-      return res.status(404).json({ error: "Task or Student not found" });
+    if (!task) {
+      return res.status(404).json({ error: "Task not found" });
     }
 
-    task.assignedTo = studentId;
-    await task.save();
-    res.json(task);
+    // Create a new task for each student
+    const assignedTasks = await Promise.all(
+      studentIds.map(async (studentId) => {
+        const student = await Student.findById(studentId);
+        if (!student) {
+          throw new Error(`Student with ID ${studentId} not found`);
+        }
+
+        // Create a new task instance for each student
+        const newTask = new Task({
+          name: task.name,
+          reward: task.reward,
+          assignedTo: studentId,
+          status: "nan", // Reset status to "not assigned"
+        });
+
+        await newTask.save();
+        return newTask;
+      })
+    );
+
+    res.json(assignedTasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
@@ -77,6 +97,7 @@ router.put("/:id/complete", async (req, res) => {
 });
 
 // Approve or reject a task (teacher action)
+// Update the approve task endpoint in tasks.js
 router.put("/:id/approve", async (req, res) => {
   const { status, comment } = req.body;
 
@@ -88,15 +109,41 @@ router.put("/:id/approve", async (req, res) => {
       return res.status(404).json({ error: "Task or Student not found" });
     }
 
-    task.status = status; // Set status to approved or rejected
-    task.teacherComment = comment || ""; // Add teacher's comment
+    task.status = status;
+    task.teacherComment = comment || "";
 
     if (status === "approved") {
       // Add reward to the student's balance
       student.balance += task.reward;
+      student.completedTasks += 1;
+
+      // Get level configuration
+      const levelConfig = await LevelConfig.findOne({ level: student.level });
+      if (!levelConfig) {
+        return res.status(500).json({ error: "Level configuration not found" });
+      }
+
+      // Check if student has completed required tasks for current level
+      if (student.completedTasks >= levelConfig.tasksRequired) {
+        student.level += 1;
+        student.completedTasks = 0;
+
+        // Get reward for next level
+        const nextLevelConfig = await LevelConfig.findOne({ level: student.level });
+        if (nextLevelConfig) {
+          student.balance += nextLevelConfig.reward;
+          
+          await axios.post(`${process.env.BASE_URL}/api/transactions`, {
+            student: task.assignedTo,
+            type: "Earned",
+            amount: nextLevelConfig.reward,
+            description: `Level ${student.level} completion reward: ${nextLevelConfig.description}`,
+          });
+        }
+      }
+
       await student.save();
 
-      // Create a transaction for the reward using axios
       await axios.post(`${process.env.BASE_URL}/api/transactions`, {
         student: task.assignedTo,
         type: "Earned",
@@ -112,7 +159,6 @@ router.put("/:id/approve", async (req, res) => {
     res.status(500).json({ error: "Failed to update task status", details: err.message });
   }
 });
-
 // Delete a task
 router.delete("/:id", async (req, res) => {
   const taskId = req.params.id;

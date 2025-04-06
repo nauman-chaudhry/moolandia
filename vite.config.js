@@ -6,7 +6,7 @@ export default defineConfig({
   server: {
     proxy: {
       "/api": { 
-        target: "https://moolandia-mern-app.onrender.com",// Your backend server URL
+        target: "http://localhost:5000",// Your backend server URL
         changeOrigin: true,
         secure: false,
       },
