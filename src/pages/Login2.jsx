@@ -39,13 +39,13 @@ function Login() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/season-images");
+        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
         if (response.data.success && response.data.images.length > 0) {
           // Look for an image flagged as background; otherwise, default to the first image
           const bgImage =
             response.data.images.find((img) => img.isBackground) ||
             response.data.images[0];
-          const imageUrl = `http://localhost:5000${bgImage.path || bgImage.imagePath}`;
+          const imageUrl = `https://moolandia-mern-app.onrender.com${bgImage.path || bgImage.imagePath}`;
           setBg(imageUrl);
         }
       } catch (err) {

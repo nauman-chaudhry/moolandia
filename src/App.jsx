@@ -24,12 +24,12 @@ function App() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/season-images");
+        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
         if (response.data.success) {
           // Find the image that is set as the background
           const bgImage = response.data.images.find((img) => img.isBackground);
           if (bgImage) {
-            const imageUrl = `http://localhost:5000${bgImage.imagePath || bgImage.path}`;
+            const imageUrl = `https://moolandia-mern-app.onrender.com${bgImage.imagePath || bgImage.path}`;
             document.body.style.backgroundImage = `url(${imageUrl})`;
             document.body.style.backgroundSize = "cover";
             document.body.style.backgroundRepeat = "no-repeat";

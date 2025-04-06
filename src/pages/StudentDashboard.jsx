@@ -126,13 +126,13 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await fetch("http://localhost:5000/api/season-images");
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/season-images");
         const data = await response.json();
         if (data.success && data.images.length > 0) {
           // Use an image flagged as background, or default to the first image
           const bgImage =
             data.images.find((img) => img.isBackground) || data.images[0];
-          const imageUrl = `http://localhost:5000${bgImage.path || bgImage.imagePath}`;
+          const imageUrl = `https://moolandia-mern-app.onrender.com${bgImage.path || bgImage.imagePath}`;
           setBg(imageUrl);
         }
       } catch (err) {
