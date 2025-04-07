@@ -52,7 +52,7 @@ function Login() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("/api/season-images");
+        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
         if (response.data.success && response.data.images.length > 0) {
           const bgImage = response.data.images.find((img) => img.isBackground) || response.data.images[0];
           const imageUrl = `${process.env.REACT_APP_API_BASE_URL}${bgImage.path || bgImage.imagePath}`;
@@ -84,7 +84,7 @@ function Login() {
     }
 
     try {
-      const response = await fetch("/api/auth/login", {
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password }),
