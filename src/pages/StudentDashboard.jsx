@@ -73,8 +73,8 @@ const StudentDashboard = () => {
     const fetchData = async () => {
       try {
         const [studentResponse, configsResponse] = await Promise.all([
-          fetch(`/api/students/${studentId}/dashboard`),
-          fetch("/api/levelConfig"),
+            fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}/dashboard`),
+            fetch("https://moolandia-mern-app.onrender.com/api/levelConfig"),
         ]);
 
         if (!studentResponse.ok || !configsResponse.ok) {
@@ -126,7 +126,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await fetch("/api/season-images");
+          const response = await fetch("https://moolandia-mern-app.onrender.com/api/season-images");
         const data = await response.json();
         if (data.success && data.images.length > 0) {
           // Use an image flagged as background, or default to the first image
@@ -170,7 +170,7 @@ const StudentDashboard = () => {
 
       // Update the student's cow icon in the backend
       const iconResponse = await fetch(
-        `/api/students/${studentId}/updateIcon`,
+        `https://moolandia-mern-app.onrender.com/api/students/${studentId}/updateIcon`,
         {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
@@ -181,7 +181,7 @@ const StudentDashboard = () => {
       setCowIcon(updatedIconStudent.cowIcon);
 
       // Create a transaction for the purchase
-      await fetch("/api/transactions", {
+        await fetch("https://moolandia-mern-app.onrender.com/api/transactions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -190,6 +190,51 @@ const StudentDashboard = () => {
           amount: cow.price,
           description: `Purchased cow icon: ${cow.id}`,
         }),
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
       });
 
       alert("Cow icon purchased successfully!");
@@ -200,7 +245,7 @@ const StudentDashboard = () => {
   };
 
   // Function to mark a task as complete (pending teacher approval)
-  const completeTask = async (taskId) => {
+    const completeTask = async (taskId) => {
     buttonClickSound.play();
     try {
         const response = await fetch(`https://moolandia-mern-app.onrender.com/api/tasks/${taskId}/complete`, {
