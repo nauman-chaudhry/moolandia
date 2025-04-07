@@ -13,11 +13,12 @@ const PORT = process.env.PORT || 5000;
 
 // Middleware
 app.use(cors({
-  origin: "https://moolandia.netlify.app", // Allow requests from your frontend
-  credentials: true,
+    origin: (origin, callback) => {
+        callback(null, true);
+    },
+    credentials: true,
 }));
 app.use(express.json());
-
 // Serve static files from the assets folder
 app.use('/assets', express.static(path.join(__dirname, 'assets')));
 
