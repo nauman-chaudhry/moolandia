@@ -190,51 +190,6 @@ const StudentDashboard = () => {
           amount: cow.price,
           description: `Purchased cow icon: ${cow.id}`,
         }),
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
       });
 
       alert("Cow icon purchased successfully!");
