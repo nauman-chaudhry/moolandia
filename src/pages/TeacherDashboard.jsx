@@ -42,7 +42,7 @@ const TeacherDashboard = () => {
   useEffect(() => {
     const fetchLevelConfigs = async () => {
       try {
-        const response = await fetch("/api/levelConfig");
+          const response = await fetch("https://moolandia-mern-app.onrender.com/api/levelConfig");
         const data = await response.json();
         setLevelConfigs(data);
       } catch (err) {
@@ -64,7 +64,7 @@ const TeacherDashboard = () => {
   const saveLevelConfig = async () => {
     buttonClickSound.play();
     try {
-      const response = await fetch("/api/levelConfig", {
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/levelConfig", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify(newLevelConfig)
@@ -93,7 +93,7 @@ const TeacherDashboard = () => {
   const deleteLevelConfig = async (level) => {
     buttonClickSound.play();
     try {
-      await fetch(`/api/levelConfig/${level}`, { method: "DELETE" });
+        await fetch(`https://moolandia-mern-app.onrender.com/api/levelConfig/${level}`, { method: "DELETE" });
       setLevelConfigs(prev => prev.filter(l => l.level !== level));
     } catch (err) {
       console.error("Error deleting level configuration:", err);
@@ -105,22 +105,22 @@ const TeacherDashboard = () => {
     const fetchData = async () => {
       try {
         // Fetch students
-        const studentsResponse = await fetch("/api/students");
+          const studentsResponse = await fetch("https://moolandia-mern-app.onrender.com/api/students");
         const studentsData = await studentsResponse.json();
         setStudents(studentsData);
 
         // Fetch tasks
-        const tasksResponse = await fetch("/api/tasks");
+          const tasksResponse = await fetch("https://moolandia-mern-app.onrender.com/api/tasks");
         const tasksData = await tasksResponse.json();
         setTasks(tasksData);
 
         // Fetch pending tasks
-        const pendingTasksResponse = await fetch("/api/tasks/pending");
+          const pendingTasksResponse = await fetch("https://moolandia-mern-app.onrender.com/api/tasks/pending");
         const pendingTasksData = await pendingTasksResponse.json();
         setPendingTasks(pendingTasksData);
 
         // Fetch marketplace items
-        const marketplaceResponse = await fetch("/api/marketplace");
+          const marketplaceResponse = await fetch("https://moolandia-mern-app.onrender.com/api/marketplace");
         const marketplaceData = await marketplaceResponse.json();
         setMarketplaceItems(marketplaceData);
       } catch (err) {
@@ -135,7 +135,7 @@ const TeacherDashboard = () => {
   useEffect(() => {
     const fetchClasses = async () => {
       try {
-        const response = await fetch("/api/classes");
+          const response = await fetch("https://moolandia-mern-app.onrender.com/api/classes");
         const data = await response.json();
         setClasses(data);
       } catch (err) {
@@ -148,7 +148,7 @@ const TeacherDashboard = () => {
   // Function to fetch students in a class
   const fetchStudentsInClass = async (classId) => {
     try {
-      const response = await fetch(`/api/classes/${classId}/students`);
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/classes/${classId}/students`);
       if (!response.ok) {
         throw new Error("Failed to fetch students in class");
       }
@@ -162,7 +162,7 @@ const TeacherDashboard = () => {
   // Function to create a new class
   const createClass = async () => {
     try {
-      const response = await fetch("/api/classes", {
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/classes", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: newClassName }),
@@ -178,7 +178,7 @@ const TeacherDashboard = () => {
   // Function to delete a class
   const deleteClass = async (classId) => {
     try {
-      await fetch(`/api/classes/${classId}`, { method: "DELETE" });
+        await fetch(`https://moolandia-mern-app.onrender.com/api/classes/${classId}`, { method: "DELETE" });
       setClasses(classes.filter((c) => c._id !== classId));
     } catch (err) {
       console.error("Error deleting class:", err);
@@ -187,7 +187,7 @@ const TeacherDashboard = () => {
 
   const assignStudentToClass = async (studentId, classId) => {
     try {
-      const response = await fetch(`/api/students/${studentId}/updateClass`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}/updateClass`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ classId }),
@@ -209,7 +209,7 @@ const TeacherDashboard = () => {
   // Function to fetch student details
   const fetchStudentDetails = async (studentId) => {
     try {
-      const response = await fetch(`/api/students/${studentId}/dashboard`);
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}/dashboard`);
       if (!response.ok) {
         throw new Error("Failed to fetch student details");
       }
@@ -238,7 +238,7 @@ const TeacherDashboard = () => {
     if (!newStudentName || !newStudentPassword) return;
 
     try {
-      const response = await fetch("/api/students", {
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/students", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: newStudentName, password: newStudentPassword }),
@@ -257,7 +257,7 @@ const TeacherDashboard = () => {
   const createTask = async (taskName, reward) => {
     buttonClickSound.play();
     try {
-      const response = await fetch("/api/tasks", {
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: taskName, reward }),
@@ -279,7 +279,7 @@ const TeacherDashboard = () => {
     );
 
     try {
-      const response = await fetch(`/api/tasks/${taskId}/assign`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/tasks/${taskId}/assign`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ studentIds: selectedStudentIds }),
@@ -303,7 +303,7 @@ const TeacherDashboard = () => {
   const deleteStudent = async (studentId) => {
     buttonClickSound.play();
     try {
-      const response = await fetch(`/api/students/${studentId}`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}`, {
         method: "DELETE",
       });
 
@@ -321,7 +321,7 @@ const TeacherDashboard = () => {
   const deleteTask = async (taskId) => {
     buttonClickSound.play();
     try {
-      const response = await fetch(`/api/tasks/${taskId}`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/tasks/${taskId}`, {
         method: "DELETE",
       });
 
@@ -339,7 +339,7 @@ const TeacherDashboard = () => {
   const addMarketplaceItem = async (itemName, price) => {
     buttonClickSound.play();
     try {
-      const response = await fetch("/api/marketplace", {
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/marketplace", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ name: itemName, price }),
@@ -356,7 +356,7 @@ const TeacherDashboard = () => {
   const deleteMarketplaceItem = async (itemId) => {
     buttonClickSound.play();
     try {
-      const response = await fetch(`/api/marketplace/${itemId}`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/marketplace/${itemId}`, {
         method: "DELETE",
       });
 
@@ -375,7 +375,7 @@ const TeacherDashboard = () => {
   const generateBalancesReport = async () => {
     buttonClickSound.play();
     try {
-      const response = await fetch("/api/students/report/balances");
+        const response = await fetch("https://moolandia-mern-app.onrender.com/api/students/report/balances");
       if (!response.ok) {
         throw new Error("Failed to fetch report data");
       }
@@ -413,7 +413,7 @@ const TeacherDashboard = () => {
       }
 
       const deductionAmount = -parsedAmount;
-      const response = await fetch(`/api/students/${studentId}/balance`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}/balance`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: deductionAmount }),
@@ -429,7 +429,7 @@ const TeacherDashboard = () => {
         student._id === updatedStudent._id ? updatedStudent : student
       ));
 
-      await fetch("/api/transactions", {
+        await fetch("https://moolandia-mern-app.onrender.com/api/transactions", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -451,7 +451,7 @@ const TeacherDashboard = () => {
   const handleTaskApproval = async (taskId, status, comment) => {
     buttonClickSound.play();
     try {
-      const response = await fetch(`/api/tasks/${taskId}/approve`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/tasks/${taskId}/approve`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ status, comment }),
@@ -475,7 +475,7 @@ const TeacherDashboard = () => {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await fetch("/api/season-images");
+          const response = await fetch("https://moolandia-mern-app.onrender.com/api/season-images");
         const data = await response.json();
         if (data.success && data.images.length > 0) {
           const bgImage =
