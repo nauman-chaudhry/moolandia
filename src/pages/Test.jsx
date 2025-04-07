@@ -23,7 +23,7 @@ const SeasonImageManager = () => {
     const formData = new FormData();
     formData.append('seasonImage', selectedFile);
     try {
-      const response = await axios.post('/api/season-images', formData, {
+        const response = await axios.post('https://moolandia-mern-app.onrender.com/api/season-images', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (response.data.success) {
@@ -42,7 +42,7 @@ const SeasonImageManager = () => {
   // Fetch the list of images from the backend
   const fetchImages = async () => {
     try {
-      const response = await axios.get('/api/season-images');
+        const response = await axios.get('https://moolandia-mern-app.onrender.com/api/season-images');
       if (response.data.success) {
         setImages(response.data.images);
       }
@@ -81,7 +81,7 @@ const SeasonImageManager = () => {
   const handleDeleteImage = async (id) => {
     if (!window.confirm('Are you sure you want to delete this image?')) return;
     try {
-      const response = await axios.delete(`/api/season-images/${id}`);
+        const response = await axios.delete(`https://moolandia-mern-app.onrender.com/api/season-images/${id}`);
       if (response.data.success) {
         fetchImages(); // Refresh the image list after deletion
       } else {
