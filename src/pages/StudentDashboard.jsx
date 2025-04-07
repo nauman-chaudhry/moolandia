@@ -58,7 +58,7 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchLevelConfigs = async () => {
       try {
-        const response = await fetch("/api/levelConfig");
+          const response = await fetch("https://moolandia-mern-app.onrender.com/api/levelConfig");
         const data = await response.json();
         setLevelConfigs(data);
       } catch (err) {
@@ -108,10 +108,10 @@ const StudentDashboard = () => {
   useEffect(() => {
     const fetchClass = async () => {
       try {
-        const response = await fetch(`/api/students/${studentId}/dashboard`);
+          const response = await fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}/dashboard`);
         const data = await response.json();
         if (data.class) {
-          const classResponse = await fetch(`/api/classes/${data.class}`);
+            const classResponse = await fetch(`https://moolandia-mern-app.onrender.com/api/classes/${data.class}`);
           const classData = await classResponse.json();
           setStudentClass(classData);
         }
@@ -160,7 +160,7 @@ const StudentDashboard = () => {
 
     try {
       // Deduct the price from the student's balance
-      const balanceResponse = await fetch(`/api/students/${studentId}/balance`, {
+        const balanceResponse = await fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}/balance`, {
         method: "PUT",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ amount: -cow.price }),
@@ -203,7 +203,7 @@ const StudentDashboard = () => {
   const completeTask = async (taskId) => {
     buttonClickSound.play();
     try {
-      const response = await fetch(`/api/tasks/${taskId}/complete`, {
+        const response = await fetch(`https://moolandia-mern-app.onrender.com/api/tasks/${taskId}/complete`, {
         method: "PUT",
       });
       const updatedTask = await response.json();
@@ -228,7 +228,7 @@ const StudentDashboard = () => {
     const item = marketplaceItems.find((i) => i._id === itemId);
     if (item && balance >= item.price) {
       try {
-        const response = await fetch(`/api/students/${studentId}/balance`, {
+          const response = await fetch(`https://moolandia-mern-app.onrender.com/api/students/${studentId}/balance`, {
           method: "PUT",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({ amount: -item.price }),
@@ -236,7 +236,7 @@ const StudentDashboard = () => {
         const updatedStudent = await response.json();
         setBalance(updatedStudent.balance);
 
-        await fetch("/api/transactions", {
+          await fetch("https://moolandia-mern-app.onrender.com/api/transactions", {
           method: "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
