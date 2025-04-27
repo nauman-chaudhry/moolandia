@@ -552,7 +552,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000",
             }}
           >
             Create Student
