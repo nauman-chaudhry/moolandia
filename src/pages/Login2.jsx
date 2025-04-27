@@ -5,7 +5,7 @@ import { Howl } from "howler";
 import axios from "axios";
 import logo from "./LogoColor.png";
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [role, setRole] = useState(null); // Track selected role (teacher or student)
   const [username, setUsername] = useState(""); // Track username input
@@ -88,7 +88,7 @@ function Login() {
         // Check if the user's role matches the selected role
         if (data.role === role) {
           successSound.play(); // Play success sound
-
+          setIsAuthenticated && setIsAuthenticated(true);
           // Navigate to the appropriate dashboard
           if (role === "teacher") {
             navigate("/teacher-dashboard");
