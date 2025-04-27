@@ -819,7 +819,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000",
             }}
           >
             Assign Students to Class
@@ -833,6 +833,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color:"#000000",
               }}
             >
               <option value="">Select a Class</option>
@@ -909,7 +910,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000",
             }}
           >
             Create Task
@@ -934,6 +935,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   flex: "1",
                   backgroundColor: "#fef3c7",
+                  color:"#000000",
                 }}
                 required
               />
@@ -947,6 +949,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   width: "8rem",
                   backgroundColor: "#fef3c7",
+                  color:"#000000",
                 }}
                 required
               />
@@ -986,7 +989,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000",
             }}
           >
             Assign Task
@@ -1000,6 +1003,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color:"#000000",
               }}
             >
               {tasks.map((task) => (
@@ -1084,7 +1088,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000",
             }}
           >
             Pending Task Approvals
@@ -1098,6 +1102,7 @@ const TeacherDashboard = () => {
                   key={task._id}
                   style={{
                     backgroundColor: "#fef3c7",
+                    color:"#000000",
                     padding: "1rem",
                     borderRadius: "0.5rem",
                     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
@@ -1204,7 +1209,7 @@ const TeacherDashboard = () => {
       fontSize: "1.5rem",
       fontWeight: "600",
       marginBottom: "1rem",
-      color: "#78350f",
+      color: "#000000",
     }}
   >
     Student Balances
@@ -1217,14 +1222,14 @@ const TeacherDashboard = () => {
       marginBottom: "1rem",
     }}
   >
-    <h3 style={{ fontSize: "1.5rem", fontWeight: "600", color: "#78350f" }}>
+    <h3 style={{ fontSize: "1.5rem", fontWeight: "600", color: "#000000" }}>
       Student Balances Report
     </h3>
     <button
       onClick={generateBalancesReport}
       style={{
         backgroundColor: "#3b82f6",
-        color: "white",
+        color: "#000000",
         padding: "0.5rem 1rem",
         borderRadius: "0.5rem",
         fontWeight: "bold",
@@ -1253,6 +1258,7 @@ const TeacherDashboard = () => {
         key={student._id}
         style={{
           backgroundColor: "#fef3c7",
+          color:"#000000",
           padding: "1rem",
           borderRadius: "0.5rem",
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
