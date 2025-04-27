@@ -758,6 +758,7 @@ const StudentDashboard = () => {
                     {cow.price} Moolah
                   </span>
                   <button
+                    onClick={() => purchaseCowIcon(cow)}
                     style={{
                       padding: "0.25rem 0.5rem",
                       fontSize: "0.9rem",
