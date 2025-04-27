@@ -1,4 +1,4 @@
-import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import axios from "axios";
 import Login from "./pages/Login";
@@ -10,6 +10,26 @@ import Test from "./pages/Test";
 function App() {
   // Track if the viewport is mobile-sized
   const [isMobile, setIsMobile] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
+
+  // Check authentication status on page load
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/auth/check-auth", {
+          withCredentials: true
+        });
+        setIsAuthenticated(response.data.isAuthenticated);
+      } catch (error) {
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    checkAuth();
+  }, []);
 
   useEffect(() => {
     function handleResize() {
@@ -43,14 +63,45 @@ function App() {
     fetchBackgroundImage();
   }, []);
 
+  // Protected Route component
+  const ProtectedRoute = ({ children }) => {
+    if (isLoading) {
+      return <div>Loading...</div>; // You can replace this with a proper loading component
+    }
+    return isAuthenticated ? children : <Navigate to="/" replace />;
+  };
+
   return (
     <Router>
       <Routes>
-        {/* Conditionally render Login2 for mobile screens, otherwise render Login */}
+        {/* Public routes */}
         <Route path="/" element={isMobile ? <Login2 /> : <Login />} />
-        <Route path="/teacher-dashboard" element={<TeacherDashboard />} />
-        <Route path="/student/:id/dashboard" element={<StudentDashboard />} />
-        <Route path="/seasonselector" element={<Test />} />
+        
+        {/* Protected routes */}
+        <Route 
+          path="/teacher-dashboard" 
+          element={
+            <ProtectedRoute>
+              <TeacherDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/student/:id/dashboard" 
+          element={
+            <ProtectedRoute>
+              <StudentDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/seasonselector" 
+          element={
+            <ProtectedRoute>
+              <Test />
+            </ProtectedRoute>
+          } 
+        />
       </Routes>
     </Router>
   );
