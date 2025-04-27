@@ -204,7 +204,7 @@ function Login({ setIsAuthenticated }) {
               padding: isMobile ? "2rem 1rem" : "2.5rem 3rem",
               width: isMobile ? "95%" : "400px",
               maxWidth: "95vw",
-              marginLeft: isMobile ? "0" : "0px",
+              margin: "0 auto",
               display: "flex",
               flexDirection: "column",
               alignItems: "center",
@@ -212,95 +212,103 @@ function Login({ setIsAuthenticated }) {
               position: "relative"
             }}
           >
+            <h2
+              className="text-3xl font-bold mb-6 text-center text-yellow-400"
+              style={{
+                textShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
+                fontFamily: "'Cinzel', serif",
+                margin: 0,
+                fontSize: isMobile ? "2rem" : "2.25rem",
+                width: "100%",
+                textAlign: "center"
+              }}
+            >
+              {role === "teacher" ? "Teacher Login" : "Student Login"}
+            </h2>
+            <form onSubmit={handleLogin} className="flex flex-col gap-6" style={{ width: "100%" }}>
+              <div className="relative" style={{ width: "100%" }}>
+                <input
+                  type="text"
+                  placeholder="Username"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                  className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
+                  style={{
+                    boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
+                    fontSize: isMobile ? "1.1rem" : "1.25rem",
+                    width: "100%",
+                    margin: 0
+                  }}
+                  required
+                />
+              </div>
 
-<h2
-            className="text-3xl font-bold mb-6 text-center text-yellow-400"
-            style={{
-              textShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
-              fontFamily: "'Cinzel', serif",
-              marginLeft: isMobile ? "0" : "690px",
-            }}
-          >
-            {role === "teacher" ? "Teacher Login" : "Student Login"}
-          </h2>
-          <form onSubmit={handleLogin} className="flex flex-col gap-6">
-            <div className="relative">
-              <input
-                type="text"
-                placeholder="Username"
-                value={username}
-                onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
-                style={{
-                  boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginLeft: isMobile ? "0" : "690px"
-                }}
-                required
-              />
-            </div>
+              <div className="relative" style={{ width: "100%" }}>
+                <input
+                  type="password"
+                  placeholder="Password"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                  className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
+                  style={{
+                    boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
+                    fontSize: isMobile ? "1.1rem" : "1.25rem",
+                    width: "100%",
+                    margin: 0
+                  }}
+                  required
+                />
+              </div>
 
-            <div className="relative">
-              <input
-                type="password"
-                placeholder="Password"
-                value={password}
-                onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
-                style={{
-                  boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginLeft: isMobile ? "0" : "690px"
-                }}
-                required
-              />
-            </div>
+              {error && (
+                <motion.p
+                  initial={{ opacity: 0 }}
+                  animate={{ opacity: 1 }}
+                  transition={{ duration: 0.5 }}
+                  className="text-red-500 text-sm text-center"
+                  style={{
+                    textShadow: "0 0 5px rgba(255, 0, 0, 0.8)",
+                    margin: 0,
+                    width: "100%"
+                  }}
+                >
+                  {error}
+                </motion.p>
+              )}
 
-            {error && (
-              <motion.p
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                transition={{ duration: 0.5 }}
-                className="text-red-500 text-sm text-center"
+              <motion.button
+                whileHover={{ scale: 1.1 }}
+                whileTap={{ scale: 0.9 }}
+                type="submit"
+                className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
                 style={{
-                  textShadow: "0 0 5px rgba(255, 0, 0, 0.8)",
-                  marginLeft: isMobile ? "0" : "730px"
+                  boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
+                  width: "100%",
+                  fontSize: isMobile ? "1.1rem" : "1.25rem",
+                  margin: 0
                 }}
               >
-                {error}
-              </motion.p>
-            )}
+                Login
+              </motion.button>
+            </form>
 
             <motion.button
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
-              type="submit"
-              className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
+              onClick={() => setRole(null)}
+              className="mt-4 text-sm text-yellow-400 hover:text-yellow-300 text-center w-full"
               style={{
-                boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
-                marginLeft: isMobile ? "0" : "800px"
+                textShadow: "0 0 5px rgba(255, 223, 0, 0.8)",
+                margin: 0,
+                width: "100%"
               }}
             >
-              Login
+              ← Back to Role Selection
             </motion.button>
-          </form>
-
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setRole(null)}
-            className="mt-4 text-sm text-yellow-400 hover:text-yellow-300 text-center w-full"
-            style={{
-              textShadow: "0 0 5px rgba(255, 223, 0, 0.8)",
-              marginLeft: isMobile ? "0" : "730px"
-            }}
-          >
-            ← Back to Role Selection
-          </motion.button>
-        </motion.div>
-      )}
-    </div>
-  );
+          </motion.div>
+        )}
+      </div>
+    );
 }
 
 export default Login;
