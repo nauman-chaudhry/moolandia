@@ -109,7 +109,7 @@ const Login2 = ({ setIsAuthenticated }) => {
 
   return (
     <div
-      className="min-h-screen w-full flex flex-col items-center justify-center p-4 md:p-6 lg:p-8"
+      className="min-h-screen w-full flex flex-col items-center justify-start pt-4 pb-8 px-4 md:px-6 lg:px-8 overflow-hidden"
       style={{
         backgroundImage: bg ? `url(${bg})` : "none",
         backgroundSize: "cover",
@@ -123,8 +123,8 @@ const Login2 = ({ setIsAuthenticated }) => {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className={`mb-4 sm:mb-8 w-full ${
-          isTablet ? "max-w-[250px]" : "max-w-[200px] sm:max-w-[300px]"
+        className={`mb-2 sm:mb-4 w-full ${
+          isTablet ? "max-w-[180px]" : "max-w-[140px] sm:max-w-[200px]"
         }`}
       >
         <img src={logo} alt="Game Logo" className="w-full" />
@@ -136,17 +136,17 @@ const Login2 = ({ setIsAuthenticated }) => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg"
+          className="w-full max-w-[320px] sm:max-w-[400px] bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg"
         >
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-white mb-4 sm:mb-6 md:mb-8">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center text-white mb-3 sm:mb-4 md:mb-6">
             Select Your Role
           </h2>
-          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-6 justify-center">
+          <div className="flex flex-col sm:flex-row gap-2 sm:gap-3 md:gap-4 justify-center">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleRoleSelection("teacher")}
-              className="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-yellow-500 text-white text-base sm:text-lg md:text-xl font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
+              className="w-full sm:w-auto px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 bg-yellow-500 text-white text-sm sm:text-base md:text-lg font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
             >
               🧑‍🏫 Teacher
             </motion.button>
@@ -154,7 +154,7 @@ const Login2 = ({ setIsAuthenticated }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleRoleSelection("student")}
-              className="w-full sm:w-auto px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-green-500 text-white text-base sm:text-lg md:text-xl font-bold rounded-full shadow-lg hover:bg-green-600 transition-colors"
+              className="w-full sm:w-auto px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 bg-green-500 text-white text-sm sm:text-base md:text-lg font-bold rounded-full shadow-lg hover:bg-green-600 transition-colors"
             >
               👩‍🎓 Student
             </motion.button>
@@ -166,19 +166,19 @@ const Login2 = ({ setIsAuthenticated }) => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-6 md:p-8 shadow-lg"
+          className="w-full max-w-[320px] sm:max-w-[400px] bg-white/10 backdrop-blur-md rounded-2xl p-3 sm:p-4 md:p-6 shadow-lg"
         >
-          <h2 className="text-xl sm:text-2xl md:text-3xl font-bold text-center text-white mb-4 sm:mb-6 md:mb-8">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center text-white mb-3 sm:mb-4 md:mb-6">
             {role === "teacher" ? "Teacher Login" : "Student Login"}
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-3 sm:space-y-4 md:space-y-6">
+          <form onSubmit={handleSubmit} className="space-y-2 sm:space-y-3 md:space-y-4">
             <div>
               <input
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
+                className="w-full px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-sm sm:text-base"
                 required
               />
             </div>
@@ -188,7 +188,7 @@ const Login2 = ({ setIsAuthenticated }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-3 py-2 sm:px-4 sm:py-3 md:px-6 md:py-4 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
+                className="w-full px-3 py-2 sm:px-4 sm:py-2.5 md:px-5 md:py-3 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-sm sm:text-base"
                 required
               />
             </div>
@@ -198,7 +198,7 @@ const Login2 = ({ setIsAuthenticated }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="text-red-400 text-center text-sm sm:text-base"
+                className="text-red-400 text-center text-xs sm:text-sm"
               >
                 {error}
               </motion.p>
@@ -208,7 +208,7 @@ const Login2 = ({ setIsAuthenticated }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full px-4 py-2 sm:px-6 sm:py-3 md:px-8 md:py-4 bg-yellow-500 text-white text-base sm:text-lg md:text-xl font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
+              className="w-full px-3 py-2 sm:px-4 sm:py-2.5 md:px-6 md:py-3 bg-yellow-500 text-white text-sm sm:text-base md:text-lg font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
             >
               Login
             </motion.button>
@@ -217,7 +217,7 @@ const Login2 = ({ setIsAuthenticated }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setRole(null)}
-              className="w-full px-3 py-2 text-yellow-400 hover:text-yellow-300 text-center text-sm sm:text-base"
+              className="w-full px-2 py-1.5 text-yellow-400 hover:text-yellow-300 text-center text-xs sm:text-sm"
             >
               ← Back to Role Selection
             </motion.button>
