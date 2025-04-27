@@ -61,10 +61,17 @@ function Login({ setIsAuthenticated }) {
 
       if (response.ok) {
         if (data.token) {
+          // Store the token and user info
           localStorage.setItem("token", data.token);
-          localStorage.setItem("userType", data.userType);
-          localStorage.setItem("userId", data.userId);
+          localStorage.setItem("userType", data.role);
+          if (data.studentId) {
+            localStorage.setItem("userId", data.studentId);
+          }
           
+          // Update authentication state
+          setIsAuthenticated(true);
+          
+          // Navigate based on role
           if (role === "teacher") {
             navigate("/teacher-dashboard");
           } else if (role === "student" && data.studentId) {
@@ -76,7 +83,7 @@ function Login({ setIsAuthenticated }) {
           setError("No token received from server");
         }
       } else {
-        setError(data.message || "Login failed. Please check your credentials.");
+        setError(data.error || "Login failed. Please check your credentials.");
       }
     } catch (err) {
       console.error("Login error:", err);
