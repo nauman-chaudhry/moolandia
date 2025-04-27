@@ -518,7 +518,7 @@ const TeacherDashboard = () => {
           fontWeight: "bold",
           marginBottom: "1.5rem",
           textAlign: "center",
-          color: "#fbbf24",
+          color: "#000000",
           textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
         }}
       >
