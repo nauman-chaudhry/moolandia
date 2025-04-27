@@ -196,11 +196,20 @@ function Login({ setIsAuthenticated }) {
             initial={{ opacity: 0, y: 50 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1 }}
-            className="bg-transparent p-8 rounded-3xl shadow-lg border-2 border-yellow-400 relative"
+            className="login-card"
             style={{
-              //boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
-              width: isMobile ? "90%" : "auto",
-              marginLeft: isMobile ? "0" : "0px"
+              background: "white",
+              borderRadius: "1.5rem",
+              boxShadow: "0 8px 32px 0 rgba(31, 38, 135, 0.15)",
+              padding: isMobile ? "2rem 1rem" : "2.5rem 3rem",
+              width: isMobile ? "95%" : "400px",
+              maxWidth: "95vw",
+              marginLeft: isMobile ? "0" : "0px",
+              display: "flex",
+              flexDirection: "column",
+              alignItems: "center",
+              border: "none",
+              position: "relative"
             }}
           >
 
