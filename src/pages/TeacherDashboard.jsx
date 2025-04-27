@@ -690,6 +690,7 @@ const TeacherDashboard = () => {
                     justifyContent: "space-between",
                     border: "2px solid #fbbf24",
                     cursor: "pointer",
+                    color:"#000000",
                   }}
                   onClick={() => fetchStudentsInClass(cls._id)}
                 >
