@@ -569,6 +569,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color: "#000000",
               }}
             />
             <input
@@ -582,6 +583,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color: "#000000",
               }}
             />
             <button
@@ -619,7 +621,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000",
             }}
           >
             Manage Classes
@@ -636,6 +638,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color: "#000000",
               }}
             />
             <button
@@ -662,7 +665,7 @@ const TeacherDashboard = () => {
                 fontSize: "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
-                color: "#78350f",
+                color: "#000000",
               }}
             >
               Existing Classes
