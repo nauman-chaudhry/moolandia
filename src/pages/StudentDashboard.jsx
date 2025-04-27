@@ -1,5 +1,6 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useContext } from "react";
 import { useParams } from "react-router-dom";
+import { BackgroundImageContext } from "../App";
 import cow1 from "./cows/c1.png";
 import cow2 from "./cows/c2.png";
 import cow3 from "./cows/c3.png";
@@ -17,6 +18,7 @@ import coinImage from "./coin.png";
 import { Howl } from "howler";
 
 const StudentDashboard = () => {
+  const { backgroundImage } = useContext(BackgroundImageContext);
   const { id: studentId } = useParams(); // Extract studentId from the URL
   const [balance, setBalance] = useState(0);
   const [tasks, setTasks] = useState([]);
@@ -29,7 +31,6 @@ const StudentDashboard = () => {
   const [error, setError] = useState(null);
   const [studentClass, setStudentClass] = useState(null);
   const [levelConfigs, setLevelConfigs] = useState([]);
-  const [bg, setBg] = useState(null); // State to hold the fetched background image URL
 
   const cowIcons = [
     { id: "c1", image: cow1, price: 50 },
@@ -121,26 +122,6 @@ const StudentDashboard = () => {
     };
     fetchClass();
   }, [studentId]);
-
-  // Fetch background image from the backend
-  useEffect(() => {
-    const fetchBackgroundImage = async () => {
-      try {
-          const response = await fetch("https://moolandia-mern-app.onrender.com/api/season-images");
-        const data = await response.json();
-        if (data.success && data.images.length > 0) {
-          // Use an image flagged as background, or default to the first image
-          const bgImage =
-            data.images.find((img) => img.isBackground) || data.images[0];
-          const imageUrl = `https://moolandia-mern-app.onrender.com${bgImage.path || bgImage.imagePath}`;
-          setBg(imageUrl);
-        }
-      } catch (err) {
-        console.error("Error fetching background image:", err);
-      }
-    };
-    fetchBackgroundImage();
-  }, []);
 
   if (loading) {
     return <div>Loading...</div>;
@@ -268,7 +249,7 @@ const StudentDashboard = () => {
         width: "100vw",
         maxWidth: "100vw",
         minHeight: "100vh",
-        backgroundImage: bg ? `url(${bg})` : "none",
+        backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
