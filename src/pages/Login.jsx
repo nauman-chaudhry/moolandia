@@ -6,7 +6,7 @@ import axios from "axios";
 import logo from "./LogoColor.png";
 import coinImage from "./coin.png"; // Added coin import
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
   const [username, setUsername] = useState("");
@@ -95,6 +95,7 @@ function Login() {
       if (response.ok) {
         if (data.role === role) {
           successSound.play();
+          setIsAuthenticated(true); // Set authentication state to true
           if (role === "teacher") {
             navigate("/teacher-dashboard");
           } else {
