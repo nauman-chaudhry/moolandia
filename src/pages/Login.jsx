@@ -5,7 +5,6 @@ import { Howl } from "howler";
 import axios from "axios";
 import { BackgroundImageContext } from "../App";
 import logo from "./LogoColor.png";
-import coinImage from "./coin.png"; // Added coin import
 
 function Login({ setIsAuthenticated }) {
   const { backgroundImage } = useContext(BackgroundImageContext);
@@ -14,19 +13,7 @@ function Login({ setIsAuthenticated }) {
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const [bg, setBg] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
-
-  // Added mobile detection
-  useEffect(() => {
-    const checkMobile = () => {
-      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
-    };
-    
-    checkMobile();
-    window.addEventListener('resize', checkMobile);
-    return () => window.removeEventListener('resize', checkMobile);
-  }, []);
 
   // Sound effects
   const [buttonClickSound] = useState(
@@ -50,24 +37,6 @@ function Login({ setIsAuthenticated }) {
     })
   );
 
-  // Fetch background image
-  useEffect(() => {
-    const fetchBackgroundImage = async () => {
-      try {
-        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
-        if (response.data.success && response.data.images.length > 0) {
-          const bgImage = response.data.images.find((img) => img.isBackground) || response.data.images[0];
-          const imageUrl = `${process.env.REACT_APP_API_BASE_URL}${bgImage.path || bgImage.imagePath}`;
-          setBg(imageUrl);
-        }
-      } catch (err) {
-        console.error("Error fetching background image:", err);
-      }
-    };
-
-    fetchBackgroundImage();
-  }, []);
-
   // Handle role selection
   const handleRoleSelection = (selectedRole) => {
     setRole(selectedRole);
@@ -83,7 +52,7 @@ function Login({ setIsAuthenticated }) {
       const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, role }),
       });
       const data = await response.json();
       if (response.ok) {
@@ -156,120 +125,173 @@ function Login({ setIsAuthenticated }) {
           }}
         ></div>
       </div>
-      <form
-        onSubmit={handleLogin}
-        style={{
-          height: "520px",
-          width: "400px",
-          backgroundColor: "rgba(255,255,255,0.13)",
-          position: "absolute",
-          transform: "translate(-50%, -50%)",
-          top: "50%",
-          left: "50%",
-          borderRadius: "10px",
-          backdropFilter: "blur(10px)",
-          border: "2px solid rgba(255,255,255,0.1)",
-          boxShadow: "0 0 40px rgba(8,7,16,0.6)",
-          padding: "50px 35px",
-        }}
-      >
-        <h3 style={{ fontSize: "32px", fontWeight: "500", lineHeight: "42px", textAlign: "center", color: "#ffffff" }}>
-          Login Here
-        </h3>
 
-        <label htmlFor="username" style={{ display: "block", marginTop: "30px", fontSize: "16px", fontWeight: "500", color: "#ffffff" }}>
-          Username
-        </label>
-        <input
-          type="text"
-          placeholder="Email or Phone"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
+      {!role ? (
+        <div
           style={{
-            display: "block",
-            height: "50px",
-            width: "100%",
-            backgroundColor: "rgba(255,255,255,0.07)",
-            borderRadius: "3px",
-            padding: "0 10px",
-            marginTop: "8px",
-            fontSize: "14px",
-            fontWeight: "300",
-            color: "#ffffff",
-          }}
-        />
-
-        <label htmlFor="password" style={{ display: "block", marginTop: "30px", fontSize: "16px", fontWeight: "500", color: "#ffffff" }}>
-          Password
-        </label>
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{
-            display: "block",
-            height: "50px",
-            width: "100%",
-            backgroundColor: "rgba(255,255,255,0.07)",
-            borderRadius: "3px",
-            padding: "0 10px",
-            marginTop: "8px",
-            fontSize: "14px",
-            fontWeight: "300",
-            color: "#ffffff",
-          }}
-        />
-
-        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-
-        <button
-          type="submit"
-          style={{
-            marginTop: "50px",
-            width: "100%",
-            backgroundColor: "#ffffff",
-            color: "#080710",
-            padding: "15px 0",
-            fontSize: "18px",
-            fontWeight: "600",
-            borderRadius: "5px",
-            cursor: "pointer",
+            height: "520px",
+            width: "400px",
+            backgroundColor: "rgba(255,255,255,0.13)",
+            position: "absolute",
+            transform: "translate(-50%, -50%)",
+            top: "50%",
+            left: "50%",
+            borderRadius: "10px",
+            backdropFilter: "blur(10px)",
+            border: "2px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 0 40px rgba(8,7,16,0.6)",
+            padding: "50px 35px",
+            display: "flex",
+            flexDirection: "column",
+            alignItems: "center",
+            justifyContent: "center",
           }}
         >
-          Log In
-        </button>
-
-        <div style={{ marginTop: "30px", display: "flex" }}>
-          <div
-            style={{
-              background: "rgba(255,255,255,0.27)",
-              width: "150px",
-              borderRadius: "3px",
-              padding: "5px 10px 10px 5px",
-              color: "#eaf0fb",
-              textAlign: "center",
-            }}
-          >
-            <i className="fab fa-google" style={{ marginRight: "4px" }}></i> Google
-          </div>
-          <div
-            style={{
-              background: "rgba(255,255,255,0.27)",
-              width: "150px",
-              borderRadius: "3px",
-              padding: "5px 10px 10px 5px",
-              color: "#eaf0fb",
-              textAlign: "center",
-              marginLeft: "25px",
-            }}
-          >
-            <i className="fab fa-facebook" style={{ marginRight: "4px" }}></i> Facebook
+          <h3 style={{ fontSize: "32px", fontWeight: "500", lineHeight: "42px", textAlign: "center", color: "#ffffff" }}>
+            Select Your Role
+          </h3>
+          <div style={{ display: "flex", gap: "20px", marginTop: "30px" }}>
+            <button
+              onClick={() => handleRoleSelection("teacher")}
+              style={{
+                width: "150px",
+                padding: "15px 0",
+                fontSize: "18px",
+                fontWeight: "600",
+                borderRadius: "5px",
+                cursor: "pointer",
+                backgroundColor: "#ffffff",
+                color: "#080710",
+                border: "none",
+              }}
+            >
+              Teacher
+            </button>
+            <button
+              onClick={() => handleRoleSelection("student")}
+              style={{
+                width: "150px",
+                padding: "15px 0",
+                fontSize: "18px",
+                fontWeight: "600",
+                borderRadius: "5px",
+                cursor: "pointer",
+                backgroundColor: "#ffffff",
+                color: "#080710",
+                border: "none",
+              }}
+            >
+              Student
+            </button>
           </div>
         </div>
-      </form>
+      ) : (
+        <form
+          onSubmit={handleLogin}
+          style={{
+            height: "520px",
+            width: "400px",
+            backgroundColor: "rgba(255,255,255,0.13)",
+            position: "absolute",
+            transform: "translate(-50%, -50%)",
+            top: "50%",
+            left: "50%",
+            borderRadius: "10px",
+            backdropFilter: "blur(10px)",
+            border: "2px solid rgba(255,255,255,0.1)",
+            boxShadow: "0 0 40px rgba(8,7,16,0.6)",
+            padding: "50px 35px",
+          }}
+        >
+          <h3 style={{ fontSize: "32px", fontWeight: "500", lineHeight: "42px", textAlign: "center", color: "#ffffff" }}>
+            Login Here
+          </h3>
+
+          <label htmlFor="username" style={{ display: "block", marginTop: "30px", fontSize: "16px", fontWeight: "500", color: "#ffffff" }}>
+            Username
+          </label>
+          <input
+            type="text"
+            placeholder="Email or Phone"
+            id="username"
+            value={username}
+            onChange={(e) => setUsername(e.target.value)}
+            style={{
+              display: "block",
+              height: "50px",
+              width: "100%",
+              backgroundColor: "rgba(255,255,255,0.07)",
+              borderRadius: "3px",
+              padding: "0 10px",
+              marginTop: "8px",
+              fontSize: "14px",
+              fontWeight: "300",
+              color: "#ffffff",
+            }}
+          />
+
+          <label htmlFor="password" style={{ display: "block", marginTop: "30px", fontSize: "16px", fontWeight: "500", color: "#ffffff" }}>
+            Password
+          </label>
+          <input
+            type="password"
+            placeholder="Password"
+            id="password"
+            value={password}
+            onChange={(e) => setPassword(e.target.value)}
+            style={{
+              display: "block",
+              height: "50px",
+              width: "100%",
+              backgroundColor: "rgba(255,255,255,0.07)",
+              borderRadius: "3px",
+              padding: "0 10px",
+              marginTop: "8px",
+              fontSize: "14px",
+              fontWeight: "300",
+              color: "#ffffff",
+            }}
+          />
+
+          {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
+
+          <button
+            type="submit"
+            style={{
+              marginTop: "50px",
+              width: "100%",
+              backgroundColor: "#ffffff",
+              color: "#080710",
+              padding: "15px 0",
+              fontSize: "18px",
+              fontWeight: "600",
+              borderRadius: "5px",
+              cursor: "pointer",
+            }}
+          >
+            Log In
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setRole(null)}
+            style={{
+              marginTop: "20px",
+              width: "100%",
+              backgroundColor: "transparent",
+              color: "#ffffff",
+              padding: "15px 0",
+              fontSize: "14px",
+              fontWeight: "600",
+              borderRadius: "5px",
+              cursor: "pointer",
+              border: "1px solid #ffffff",
+            }}
+          >
+            Back to Role Selection
+          </button>
+        </form>
+      )}
     </div>
   );
 }
