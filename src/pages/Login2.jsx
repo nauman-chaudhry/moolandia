@@ -6,7 +6,7 @@ import axios from "axios";
 import logo from "./LogoColor.png";
 import coinImage from "./coin.png";
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [role, setRole] = useState(null); // Track selected role (teacher or student)
   const [username, setUsername] = useState(""); // Track username input
@@ -14,6 +14,9 @@ function Login() {
   const [error, setError] = useState(""); // Track login errors
   const [bg, setBg] = useState(null); // State to hold the background image URL
   const [isMobile, setIsMobile] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
+
+  const API_BASE_URL = process.env.REACT_APP_API_BASE_URL || 'https://moolandia-mern-app.onrender.com';
 
   // Mobile detection
   useEffect(() => {
@@ -79,54 +82,63 @@ function Login() {
   // Handle login submission
   const handleLogin = async (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setError("");
 
     // Basic validation
     if (!username || !password) {
       setError("Please enter both username and password.");
-      errorSound.play(); // Play error sound
+      errorSound.play();
+      setIsLoading(false);
       return;
     }
 
     try {
-      // Send login request to the backend
-      const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
+      console.log("Attempting login with:", { username, role });
+      const response = await fetch(`${API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password, role }), // Added role to the request
+        body: JSON.stringify({ username, password, role }),
       });
 
       const data = await response.json();
+      console.log("Login response:", data);
 
       if (response.ok) {
-        // Check if the user's role matches the selected role
         if (data.role === role) {
-          successSound.play(); // Play success sound
-
-          // Store the authentication data
+          successSound.play();
+          
+          // Store authentication data
           localStorage.setItem('token', data.token);
           localStorage.setItem('role', data.role);
           if (data.studentId) {
             localStorage.setItem('studentId', data.studentId);
           }
 
-          // Navigate to the appropriate dashboard
+          // Set authentication state
+          setIsAuthenticated(true);
+
+          // Navigate to appropriate dashboard
           if (role === "teacher") {
-            navigate("/teacher-dashboard");
+            navigate("/teacher-dashboard", { replace: true });
           } else if (role === "student") {
-            navigate(`/student/${data.studentId}/dashboard`);
+            navigate(`/student/${data.studentId}/dashboard`, { replace: true });
           }
         } else {
           setError("Invalid role for this user.");
-          errorSound.play(); // Play error sound
+          errorSound.play();
         }
       } else {
-        setError(data.error || "Login failed");
-        errorSound.play(); // Play error sound
+        console.error("Login failed:", data.error);
+        setError(data.error || "Login failed. Please check your credentials.");
+        errorSound.play();
       }
     } catch (err) {
       console.error("Login error:", err);
       setError("An error occurred. Please try again.");
-      errorSound.play(); // Play error sound
+      errorSound.play();
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -298,9 +310,12 @@ function Login() {
                 boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
                 width: "100%",
                 fontSize: isMobile ? "1rem" : "1.2rem",
+                opacity: isLoading ? 0.7 : 1,
+                cursor: isLoading ? "not-allowed" : "pointer",
               }}
+              disabled={isLoading}
             >
-              Login
+              {isLoading ? "Logging in..." : "Login"}
             </motion.button>
           </form>
 
