@@ -39,13 +39,13 @@ function Login() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/season-images");
+        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
         if (response.data.success && response.data.images.length > 0) {
           // Look for an image flagged as background; otherwise, default to the first image
           const bgImage =
             response.data.images.find((img) => img.isBackground) ||
             response.data.images[0];
-          const imageUrl = `http://localhost:5000${bgImage.path || bgImage.imagePath}`;
+          const imageUrl = `https://moolandia-mern-app.onrender.com${bgImage.path || bgImage.imagePath}`;
           setBg(imageUrl);
         }
       } catch (err) {
@@ -66,6 +66,7 @@ function Login() {
   // Handle login submission
   const handleLogin = async (e) => {
     e.preventDefault();
+    buttonClickSound.play();
 
     // Basic validation
     if (!username || !password) {
@@ -75,29 +76,33 @@ function Login() {
     }
 
     try {
-      // Send login request to the backend
-      const response = await fetch("/api/auth/login", {
+      console.log("Attempting login with:", { username, password, role });
+      const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, role }),
       });
 
       const data = await response.json();
+      console.log("Login response:", data);
 
       if (response.ok) {
-        // Check if the user's role matches the selected role
-        if (data.role === role) {
-          successSound.play(); // Play success sound
+        // Store authentication data
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("userType", data.role);
+        if (data.studentId) {
+          localStorage.setItem("userId", data.studentId);
+        }
 
-          // Navigate to the appropriate dashboard
-          if (role === "teacher") {
-            navigate("/teacher-dashboard");
-          } else if (role === "student") {
-            const studentId = data.studentId; // Use the studentId returned from the backend
-            navigate(`/student/${studentId}/dashboard`); // Navigate to the student dashboard with the studentId
-          }
+        successSound.play(); // Play success sound
+        
+        // Navigate based on role
+        if (role === "teacher") {
+          navigate("/teacher-dashboard");
+        } else if (role === "student" && data.studentId) {
+          navigate(`/student/${data.studentId}/dashboard`);
         } else {
-          setError("Invalid role for this user.");
+          setError("Invalid role or missing student ID");
           errorSound.play(); // Play error sound
         }
       } else {
@@ -105,6 +110,7 @@ function Login() {
         errorSound.play(); // Play error sound
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("An error occurred. Please try again.");
       errorSound.play(); // Play error sound
     }
@@ -112,16 +118,13 @@ function Login() {
 
   return (
     <div
-      className="w-full h-screen flex flex-col items-center justify-center"
+      className="min-h-screen w-full flex flex-col items-center justify-center p-4"
       style={{
         backgroundImage: bg ? `url(${bg})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
         backgroundAttachment: "fixed",
-        minHeight: "100vh",
-        height: "100vh",
-        width: "100vw",
       }}
     >
       {/* Logo */}
@@ -129,10 +132,9 @@ function Login() {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className="mb-8"
-        style={{ paddingLeft: "250px", paddingTop: "150px" }}
+        className="mb-4 sm:mb-8 w-full max-w-[200px] sm:max-w-[300px]"
       >
-        <img src={logo} alt="Game Logo" className="w-30 ml-4" />
+        <img src={logo} alt="Game Logo" className="w-full" />
       </motion.div>
 
       {/* Role Selection or Login Form */}
@@ -142,26 +144,29 @@ function Login() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="flex flex-col items-center gap-6"
-          style={{ paddingLeft: "710px"  }}
+          className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-lg"
         >
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => handleRoleSelection("teacher")}
-            className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4"
-          >
-            🧑‍🏫 Teacher
-          </motion.button>
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => handleRoleSelection("student")}
-            className="game-button bg-green-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4 marginleftclass"
-            style={{ marginLeft: "50px" }}
-          >
-            👩‍🎓 Student
-          </motion.button>
+          <h2 className="text-2xl sm:text-3xl font-bold text-center text-white mb-6 sm:mb-8">
+            Select Your Role
+          </h2>
+          <div className="flex flex-col sm:flex-row gap-4 sm:gap-6 justify-center">
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleRoleSelection("teacher")}
+              className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 bg-yellow-500 text-white text-lg sm:text-xl font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
+            >
+              🧑‍🏫 Teacher
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => handleRoleSelection("student")}
+              className="w-full sm:w-auto px-6 py-3 sm:px-8 sm:py-4 bg-green-500 text-white text-lg sm:text-xl font-bold rounded-full shadow-lg hover:bg-green-600 transition-colors"
+            >
+              👩‍🎓 Student
+            </motion.button>
+          </div>
         </motion.div>
       ) : (
         // Login Form with Transparent Background
@@ -169,10 +174,7 @@ function Login() {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="bg-transparent p-8 rounded-3xl shadow-lg border-2 border-yellow-400 relative"
-          style={{
-            boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
-          }}
+          className="w-full max-w-md bg-white/10 backdrop-blur-md rounded-2xl p-6 sm:p-8 shadow-lg"
         >
           {/* Optional Glowing Effect */}
           <div
@@ -185,7 +187,7 @@ function Login() {
           ></div>
 
           <h2
-            className="text-3xl font-bold mb-6 text-center text-yellow-400"
+            className="text-2xl sm:text-3xl font-bold mb-6 text-center text-yellow-400"
             style={{
               textShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
               fontFamily: "'Cinzel', serif",
@@ -193,39 +195,27 @@ function Login() {
           >
             {role === "teacher" ? "Teacher Login" : "Student Login"}
           </h2>
-          <form onSubmit={handleLogin} className="flex flex-col gap-6">
+          <form onSubmit={handleLogin} className="space-y-4 sm:space-y-6">
             {/* Username Input */}
-            <div className="relative">
+            <div>
               <input
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 marginleftclass"
-                style={{
-                  boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginTop:"10px",
-              marginLeft:"690px"
-                }}
+                className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
                 required
               />
             </div>
 
             {/* Password Input */}
-            <div className="relative">
+            <div>
               <input
                 type="password"
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 marginleftclass"
-                style={{
-                  boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginTop:"10px",
-              marginLeft:"690px"
-                }}
+                className="w-full px-4 py-3 sm:px-6 sm:py-4 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-base sm:text-lg"
                 required
               />
             </div>
@@ -236,12 +226,7 @@ function Login() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="text-red-500 text-sm text-center marginleftclass"
-                style={{
-                  textShadow: "0 0 5px rgba(255, 0, 0, 0.8)",
-                  marginTop:"10px",
-              marginLeft:"730px"
-                }}
+                className="text-red-400 text-center text-sm sm:text-base"
               >
                 {error}
               </motion.p>
@@ -249,34 +234,24 @@ function Login() {
 
             {/* Login Button */}
             <motion.button
-              whileHover={{ scale: 1.1 }}
-              whileTap={{ scale: 0.9 }}
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
               type="submit"
-              className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative marginleftclass"
-              style={{
-                boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
-                marginTop:"10px",
-                marginLeft:"800px"
-              }}
+              className="w-full px-6 py-3 sm:px-8 sm:py-4 bg-yellow-500 text-white text-lg sm:text-xl font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
             >
               Login
             </motion.button>
-          </form>
 
-          {/* Back Button */}
-          <motion.button
-            whileHover={{ scale: 1.1 }}
-            whileTap={{ scale: 0.9 }}
-            onClick={() => setRole(null)}
-            className="mt-4 text-sm text-yellow-400 hover:text-yellow-300 text-center w-full marginleftclass"
-            style={{
-              textShadow: "0 0 5px rgba(255, 223, 0, 0.8)",
-              marginTop:"10px",
-              marginLeft:"730px"
-            }}
-          >
-            ← Back to Role Selection
-          </motion.button>
+            {/* Back Button */}
+            <motion.button
+              whileHover={{ scale: 1.05 }}
+              whileTap={{ scale: 0.95 }}
+              onClick={() => setRole(null)}
+              className="w-full px-4 py-2 text-yellow-400 hover:text-yellow-300 text-center text-sm sm:text-base"
+            >
+              ← Back to Role Selection
+            </motion.button>
+          </form>
         </motion.div>
       )}
     </div>
