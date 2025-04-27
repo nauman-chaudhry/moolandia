@@ -1,18 +1,32 @@
-import React, { useState, useEffect, useContext } from "react";
+import React, { useState, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { motion } from "framer-motion";
 import { Howl } from "howler";
 import axios from "axios";
-import { BackgroundImageContext } from "../App";
 import logo from "./LogoColor.png";
+import coinImage from "./coin.png"; // Added coin import
 
-const Login2 = () => {
-  const { backgroundImage } = useContext(BackgroundImageContext);
+function Login() {
+  const navigate = useNavigate();
+  const [role, setRole] = useState(null);
   const [username, setUsername] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState("");
-  const navigate = useNavigate();
-  const [role, setRole] = useState(null); // Track selected role (teacher or student)
+  const [bg, setBg] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
+
+  console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
+
+  // Added mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Sound effects
   const [buttonClickSound] = useState(
@@ -36,205 +50,251 @@ const Login2 = () => {
     })
   );
 
+  // Fetch background image
+  useEffect(() => {
+    const fetchBackgroundImage = async () => {
+      try {
+        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'https://moolandia-mern-app.onrender.com';
+        const response = await axios.get(`${apiBaseUrl}/api/season-images`);
+        if (response.data.success && response.data.images.length > 0) {
+          const bgImage = response.data.images.find((img) => img.isBackground) || response.data.images[0];
+          const imageUrl = `${apiBaseUrl}${bgImage.path || bgImage.imagePath}`;
+          setBg(imageUrl);
+        }
+      } catch (err) {
+        console.error("Error fetching background image:", err);
+      }
+    };
+
+    fetchBackgroundImage();
+  }, []);
+
   // Handle role selection
   const handleRoleSelection = (selectedRole) => {
     setRole(selectedRole);
-    setError(""); // Clear any previous errors
-    buttonClickSound.play(); // Play button click sound
+    setError("");
+    buttonClickSound.play();
   };
 
-  const handleSubmit = async (e) => {
+  // Handle login submission
+  const handleLogin = async (e) => {
     e.preventDefault();
-    buttonClickSound.play();
+
+    if (!username || !password) {
+      setError("Please enter both username and password.");
+      errorSound.play();
+      return;
+    }
+
     try {
-      const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'https://moolandia-mern-app.onrender.com';
+      console.log("API Base URL:", apiBaseUrl);
+      
+      const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, role }),
       });
+
+      console.log("Login response status:", response.status);
       const data = await response.json();
+      console.log("Login response data:", data);
+
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userType", data.userType);
-        localStorage.setItem("userId", data.userId);
-        navigate("/dashboard");
+        successSound.play();
+        if (role === "teacher") {
+          navigate("/teacher-dashboard");
+        } else {
+          navigate(`/student/${data.studentId}/dashboard`);
+        }
       } else {
-        setError(data.message || "Login failed");
+        setError(data.error || "Login failed");
+        errorSound.play();
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("An error occurred. Please try again.");
+      errorSound.play();
     }
   };
 
-  return (
-    <div
-      style={{
-        width: "100vw",
-        maxWidth: "100vw",
-        minHeight: "100vh",
-        backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
-        backgroundSize: "cover",
-        backgroundPosition: "center",
-        backgroundRepeat: "no-repeat",
-        backgroundAttachment: "fixed",
-        display: "flex",
-        flexDirection: "column",
-        alignItems: "center",
-        justifyContent: "center",
-        padding: "clamp(1rem, 5vw, 2rem)",
-        color: "black",
-        boxSizing: "border-box",
-      }}
-    >
+    return (
       <div
+        className="w-full h-screen flex flex-col items-center justify-center"
         style={{
-          width: "430px",
-          height: "520px",
-          position: "absolute",
-          transform: "translate(-50%, -50%)",
-          left: "50%",
-          top: "50%",
+          backgroundImage: bg ? `url(${bg})` : "none",
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundRepeat: "no-repeat",
+          backgroundAttachment: "fixed",
+          minHeight: "100vh",
+          height: "100vh",
+          width: "100vw",
         }}
       >
-        <div
-          style={{
-            height: "200px",
-            width: "200px",
-            position: "absolute",
-            borderRadius: "50%",
-            background: "linear-gradient(#1845ad, #23a2f6)",
-            left: "-80px",
-            top: "-80px",
-          }}
-        ></div>
-        <div
-          style={{
-            height: "200px",
-            width: "200px",
-            position: "absolute",
-            borderRadius: "50%",
-            background: "linear-gradient(to right, #ff512f, #f09819)",
-            right: "-30px",
-            bottom: "-80px",
-          }}
-        ></div>
-      </div>
-      <form
-        onSubmit={handleSubmit}
-        style={{
-          height: "520px",
-          width: "400px",
-          backgroundColor: "rgba(255,255,255,0.13)",
-          position: "absolute",
-          transform: "translate(-50%, -50%)",
-          top: "50%",
-          left: "50%",
-          borderRadius: "10px",
-          backdropFilter: "blur(10px)",
-          border: "2px solid rgba(255,255,255,0.1)",
-          boxShadow: "0 0 40px rgba(8,7,16,0.6)",
-          padding: "50px 35px",
-        }}
-      >
-        <h3 style={{ fontSize: "32px", fontWeight: "500", lineHeight: "42px", textAlign: "center", color: "#ffffff" }}>
-          Login Here
-        </h3>
-
-        <label htmlFor="username" style={{ display: "block", marginTop: "30px", fontSize: "16px", fontWeight: "500", color: "#ffffff" }}>
-          Username
-        </label>
-        <input
-          type="text"
-          placeholder="Email or Phone"
-          id="username"
-          value={username}
-          onChange={(e) => setUsername(e.target.value)}
-          style={{
-            display: "block",
-            height: "50px",
+        {/* Logo */}
+        <motion.div
+          initial={{ opacity: 0, y: -50 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+          className="mb-8"
+          style={{ 
+            paddingLeft: isMobile ? "0" : "250px",
+            paddingTop: isMobile ? "6rem" : "250px",
+            paddingBottom: isMobile ? "8rem" : "0",
             width: "100%",
-            backgroundColor: "rgba(255,255,255,0.07)",
-            borderRadius: "3px",
-            padding: "0 10px",
-            marginTop: "8px",
-            fontSize: "14px",
-            fontWeight: "300",
-            color: "#ffffff",
-          }}
-        />
-
-        <label htmlFor="password" style={{ display: "block", marginTop: "30px", fontSize: "16px", fontWeight: "500", color: "#ffffff" }}>
-          Password
-        </label>
-        <input
-          type="password"
-          placeholder="Password"
-          id="password"
-          value={password}
-          onChange={(e) => setPassword(e.target.value)}
-          style={{
-            display: "block",
-            height: "50px",
-            width: "100%",
-            backgroundColor: "rgba(255,255,255,0.07)",
-            borderRadius: "3px",
-            padding: "0 10px",
-            marginTop: "8px",
-            fontSize: "14px",
-            fontWeight: "300",
-            color: "#ffffff",
-          }}
-        />
-
-        {error && <p style={{ color: "red", marginTop: "10px" }}>{error}</p>}
-
-        <button
-          type="submit"
-          style={{
-            marginTop: "50px",
-            width: "100%",
-            backgroundColor: "#ffffff",
-            color: "#080710",
-            padding: "15px 0",
-            fontSize: "18px",
-            fontWeight: "600",
-            borderRadius: "5px",
-            cursor: "pointer",
+            display: "flex",
+            justifyContent: isMobile ? "center" : "flex-start"
           }}
         >
-          Log In
-        </button>
+          <img 
+            src={isMobile ? coinImage : logo}
+            alt="Game Logo" 
+            style={{ 
+              width: isMobile ? "60px" : "auto",
+              marginLeft: isMobile ? "0" : "1rem"
+            }}
+          />
+        </motion.div>
+  
+        {/* Role Selection/Login Content */}
+        {!role ? (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="flex flex-col items-center gap-6"
+            style={{ 
+              paddingLeft: isMobile ? "0" : "710px",
+              width: isMobile ? "100%" : "auto"
+            }}
+          >
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => handleRoleSelection("teacher")}
+              className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
+              style={{ 
+                marginLeft: isMobile ? "0" : "1rem",
+                width: isMobile ? "90%" : "auto"
+              }}
+            >
+              🧑‍🏫 Teacher
+            </motion.button>
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              onClick={() => handleRoleSelection("student")}
+              className="game-button bg-green-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
+              style={{ 
+                marginLeft: isMobile ? "0" : "50px",
+                width: isMobile ? "90%" : "auto"
+              }}
+            >
+              👩‍🎓 Student
+            </motion.button>
+          </motion.div>
+        ) : (
+          <motion.div
+            initial={{ opacity: 0, y: 50 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1 }}
+            className="bg-transparent p-8 rounded-3xl shadow-lg border-2 border-yellow-400 relative"
+            style={{
+              //boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
+              width: isMobile ? "90%" : "auto",
+              marginLeft: isMobile ? "0" : "0px"
+            }}
+          >
 
-        <div style={{ marginTop: "30px", display: "flex" }}>
-          <div
+<h2
+            className="text-3xl font-bold mb-6 text-center text-yellow-400"
             style={{
-              background: "rgba(255,255,255,0.27)",
-              width: "150px",
-              borderRadius: "3px",
-              padding: "5px 10px 10px 5px",
-              color: "#eaf0fb",
-              textAlign: "center",
+              textShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
+              fontFamily: "'Cinzel', serif",
+              marginLeft: isMobile ? "0" : "690px",
             }}
           >
-            <i className="fab fa-google" style={{ marginRight: "4px" }}></i> Google
-          </div>
-          <div
+            {role === "teacher" ? "Teacher Login" : "Student Login"}
+          </h2>
+          <form onSubmit={handleLogin} className="flex flex-col gap-6">
+            <div className="relative">
+              <input
+                type="text"
+                placeholder="Username"
+                value={username}
+                onChange={(e) => setUsername(e.target.value)}
+                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
+                style={{
+                  boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
+                  fontSize: "1.5rem",
+                  marginLeft: isMobile ? "0" : "690px"
+                }}
+                required
+              />
+            </div>
+
+            <div className="relative">
+              <input
+                type="password"
+                placeholder="Password"
+                value={password}
+                onChange={(e) => setPassword(e.target.value)}
+                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
+                style={{
+                  boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
+                  fontSize: "1.5rem",
+                  marginLeft: isMobile ? "0" : "690px"
+                }}
+                required
+              />
+            </div>
+
+            {error && (
+              <motion.p
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                transition={{ duration: 0.5 }}
+                className="text-red-500 text-sm text-center"
+                style={{
+                  textShadow: "0 0 5px rgba(255, 0, 0, 0.8)",
+                  marginLeft: isMobile ? "0" : "730px"
+                }}
+              >
+                {error}
+              </motion.p>
+            )}
+
+            <motion.button
+              whileHover={{ scale: 1.1 }}
+              whileTap={{ scale: 0.9 }}
+              type="submit"
+              className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
+              style={{
+                boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
+                marginLeft: isMobile ? "0" : "800px"
+              }}
+            >
+              Login
+            </motion.button>
+          </form>
+
+          <motion.button
+            whileHover={{ scale: 1.1 }}
+            whileTap={{ scale: 0.9 }}
+            onClick={() => setRole(null)}
+            className="mt-4 text-sm text-yellow-400 hover:text-yellow-300 text-center w-full"
             style={{
-              background: "rgba(255,255,255,0.27)",
-              width: "150px",
-              borderRadius: "3px",
-              padding: "5px 10px 10px 5px",
-              color: "#eaf0fb",
-              textAlign: "center",
-              marginLeft: "25px",
+              textShadow: "0 0 5px rgba(255, 223, 0, 0.8)",
+              marginLeft: isMobile ? "0" : "730px"
             }}
           >
-            <i className="fab fa-facebook" style={{ marginRight: "4px" }}></i> Facebook
-          </div>
-        </div>
-      </form>
+            ← Back to Role Selection
+          </motion.button>
+        </motion.div>
+      )}
     </div>
   );
-};
+}
 
-export default Login2;
+export default Login;
