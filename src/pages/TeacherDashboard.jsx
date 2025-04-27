@@ -979,104 +979,105 @@ const TeacherDashboard = () => {
           </form>
         </div>
         
-        {/* Task Assignment Section */}
-        <div
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: "1.5rem",
-            borderRadius: "0.5rem",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
-          }}
-        >
-          <h3
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              marginBottom: "1rem",
-              color: "#000000",
-            }}
-          >
-            Assign Task
-          </h3>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <select
-              ref={taskDropdownRef}
-              style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                flex: "1",
-                backgroundColor: "#fef3c7",
-                color:"#000000",
-              }}
-            >
-              {tasks.map((task) => (
-                <option key={task._id} value={task._id}>
-                  {task.name} (+{task.reward} Moolah)
-                </option>
-              ))}
-            </select>
-            <select
-              ref={studentDropdownRef}
-              multiple
-              style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                flex: "1",
-                backgroundColor: "#fef3c7",
-                height: "150px",
-              }}
-            >
-              {students.map((student) => (
-                <option key={student._id} value={student._id}>
-                  {student.icon} {student.name} (Level {student.level})
-                </option>
-              ))}
-            </select>
-            <button
-              onClick={assignTask}
-              style={{
-                backgroundColor: "#3b82f6",
-                color: "white",
-                padding: "0.5rem 1rem",
-                borderRadius: "0.5rem",
-                fontWeight: "bold",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                transition: "all 0.2s",
-                cursor: "pointer",
-              }}
-              onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-              onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-            >
-              🚀 Assign Task
-            </button>
-            <button
-              onClick={() => {
-                const taskId = taskDropdownRef.current.value;
-                deleteTask(taskId);
-              }}
-              style={{
-                backgroundColor: "#ef4444",
-                color: "white",
-                padding: "0.5rem 1rem",
-                borderRadius: "0.5rem",
-                fontWeight: "bold",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                transition: "all 0.2s",
-                cursor: "pointer",
-              }}
-              onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-              onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-            >
-              🗑️ Delete Task
-            </button>
-          </div>
-          <p style={{ fontSize: "0.875rem", color: "#4b5563", marginTop: "0.5rem" }}>
-            Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) to select multiple students.
-          </p>
-        </div>
+       {/* Task Assignment Section */}
+<div
+  style={{
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(10px)",
+  }}
+>
+  <h3
+    style={{
+      fontSize: "1.5rem",
+      fontWeight: "600",
+      marginBottom: "1rem",
+      color: "#000000",
+    }}
+  >
+    Assign Task
+  </h3>
+  <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+    <select
+      ref={taskDropdownRef}
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        flex: "1",
+        backgroundColor: "#fef3c7",
+        color: "#000000", // Force black text
+      }}
+    >
+      {tasks.map((task) => (
+        <option key={task._id} value={task._id}>
+          {task.name} (+{task.reward} Moolah)
+        </option>
+      ))}
+    </select>
+    <select
+      ref={studentDropdownRef}
+      multiple
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        flex: "1",
+        backgroundColor: "#fef3c7",
+        height: "150px",
+        color: "#000000", // Force black text
+      }}
+    >
+      {students.map((student) => (
+        <option key={student._id} value={student._id}>
+          {student.icon} {student.name} (Level {student.level})
+        </option>
+      ))}
+    </select>
+    <button
+      onClick={assignTask}
+      style={{
+        backgroundColor: "#3b82f6",
+        color: "#000000", // Make button text black
+        padding: "0.5rem 1rem",
+        borderRadius: "0.5rem",
+        fontWeight: "bold",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        transition: "all 0.2s",
+        cursor: "pointer",
+      }}
+      onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+    >
+      🚀 Assign Task
+    </button>
+    <button
+      onClick={() => {
+        const taskId = taskDropdownRef.current.value;
+        deleteTask(taskId);
+      }}
+      style={{
+        backgroundColor: "#ef4444",
+        color: "#000000", // Make button text black
+        padding: "0.5rem 1rem",
+        borderRadius: "0.5rem",
+        fontWeight: "bold",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        transition: "all 0.2s",
+        cursor: "pointer",
+      }}
+      onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+    >
+      🗑️ Delete Task
+    </button>
+  </div>
+  <p style={{ fontSize: "0.875rem", color: "#4b5563", marginTop: "0.5rem" }}>
+    Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) to select multiple students.
+  </p>
+</div>
 
         {/* Pending Task Approvals Section */}
         <div
@@ -1207,6 +1208,7 @@ const TeacherDashboard = () => {
     borderRadius: "0.5rem",
     boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
     backdropFilter: "blur(10px)",
+    color: "#000000", // <-- ensures black text by default
   }}
 >
   <h3
@@ -1252,10 +1254,10 @@ const TeacherDashboard = () => {
   <div
     style={{
       display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)", // Always 3 columns per row
+      gridTemplateColumns: "repeat(3, 1fr)",
       gap: "1rem",
-      maxHeight: "400px", // Adjust this height based on your card dimensions (approx. 2 rows)
-      overflowY: "auto", // Enables vertical scrolling when there are more than 6 students
+      maxHeight: "400px",
+      overflowY: "auto",
     }}
   >
     {students.map((student) => (
@@ -1263,7 +1265,7 @@ const TeacherDashboard = () => {
         key={student._id}
         style={{
           backgroundColor: "#fef3c7",
-          color:"#000000",
+          color: "#000000",
           padding: "1rem",
           borderRadius: "0.5rem",
           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
@@ -1297,7 +1299,7 @@ const TeacherDashboard = () => {
             }}
             style={{
               backgroundColor: "#ef4444",
-              color: "white",
+              color: "#000000", // <- changed from white to black
               padding: "0.5rem 1rem",
               borderRadius: "0.5rem",
               fontWeight: "bold",
@@ -1316,537 +1318,448 @@ const TeacherDashboard = () => {
   </div>
 </div>
 
-
-        {/* Student Details Modal */}
-        {selectedStudent && studentDetails && (
-          <div
-            style={{
-              position: "fixed",
-              top: 0,
-              left: 0,
-              width: "100%",
-              height: "100%",
-              backgroundColor: "rgba(0, 0, 0, 0.5)",
-              display: "flex",
-              justifyContent: "center",
-              alignItems: "center",
-              zIndex: 1000,
-            }}
-          >
-            <div
-              style={{
-                backgroundColor: "white",
-                padding: "2rem",
-                borderRadius: "0.5rem",
-                width: "80%",
-                maxWidth: "800px",
-                maxHeight: "90vh",
-                overflowY: "auto",
-              }}
-            >
-              <h3
-                style={{
-                  fontSize: "1.5rem",
-                  fontWeight: "600",
-                  marginBottom: "1rem",
-                  color: "#78350f",
-                }}
-              >
-                Student Details: {studentDetails.name}
-              </h3>
-              <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
-                  Balance
-                </h4>
-                <p style={{ fontSize: "1.125rem", color: "#15803d" }}>
-                  {studentDetails.balance} Moolah
-                </p>
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
-                  Cow Icon
-                </h4>
-                {studentDetails.cowIcon ? (
-                  <img
-                    src={studentDetails.cowIcon}
-                    alt="Cow Icon"
-                    style={{ width: "100px", height: "100px" }}
-                  />
-                ) : (
-                  <p>No cow icon selected.</p>
-                )}
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
-                  Transactions
-                </h4>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "1rem",
-                  }}
-                >
-                  {studentDetails.transactions.map((transaction) => (
-                    <div
-                      key={transaction._id}
-                      style={{
-                        backgroundColor: "#fef3c7",
-                        padding: "1rem",
-                        borderRadius: "0.5rem",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
-                      <p style={{ fontSize: "1rem", fontWeight: "600" }}>
-                        {transaction.type}: {transaction.amount} Moolah
-                      </p>
-                      <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
-                        {transaction.description}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
-                  Tasks
-                </h4>
-                <div
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                    gap: "1rem",
-                  }}
-                >
-                  {studentDetails.tasks.map((task) => (
-                    <div
-                      key={task._id}
-                      style={{
-                        backgroundColor: "#fef3c7",
-                        padding: "1rem",
-                        borderRadius: "0.5rem",
-                        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      }}
-                    >
-                      <p style={{ fontSize: "1rem", fontWeight: "600" }}>{task.name}</p>
-                      <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
-                        Reward: {task.reward} Moolah
-                      </p>
-                      <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
-                        Status: {task.status}
-                      </p>
-                    </div>
-                  ))}
-                </div>
-              </div>
-              <button
-                onClick={closeStudentDetails}
-                style={{
-                  backgroundColor: "#ef4444",
-                  color: "white",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "0.5rem",
-                  fontWeight: "bold",
-                  cursor: "pointer",
-                }}
-              >
-                Close
-              </button>
-            </div>
-          </div>
+{/* Student Details Modal */}
+{selectedStudent && studentDetails && (
+  <div
+    style={{
+      position: "fixed",
+      top: 0,
+      left: 0,
+      width: "100%",
+      height: "100%",
+      backgroundColor: "rgba(0, 0, 0, 0.5)",
+      display: "flex",
+      justifyContent: "center",
+      alignItems: "center",
+      zIndex: 1000,
+      color: "#000000", // <--- black text in modal
+    }}
+  >
+    <div
+      style={{
+        backgroundColor: "white",
+        padding: "2rem",
+        borderRadius: "0.5rem",
+        width: "80%",
+        maxWidth: "800px",
+        maxHeight: "90vh",
+        overflowY: "auto",
+        color: "#000000", // <--- black text inside modal box too
+      }}
+    >
+      <h3
+        style={{
+          fontSize: "1.5rem",
+          fontWeight: "600",
+          marginBottom: "1rem",
+          color: "#78350f",
+        }}
+      >
+        Student Details: {studentDetails.name}
+      </h3>
+      <div style={{ marginBottom: "1rem" }}>
+        <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+          Balance
+        </h4>
+        <p style={{ fontSize: "1.125rem", color: "#15803d" }}>
+          {studentDetails.balance} Moolah
+        </p>
+      </div>
+      <div style={{ marginBottom: "1rem" }}>
+        <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+          Cow Icon
+        </h4>
+        {studentDetails.cowIcon ? (
+          <img
+            src={studentDetails.cowIcon}
+            alt="Cow Icon"
+            style={{ width: "100px", height: "100px" }}
+          />
+        ) : (
+          <p>No cow icon selected.</p>
         )}
-
-        {/* Level Configuration Section */}
+      </div>
+      <div style={{ marginBottom: "1rem" }}>
+        <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+          Transactions
+        </h4>
         <div
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: "1.5rem",
-            borderRadius: "0.5rem",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "1rem",
           }}
         >
-          <h3
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              marginBottom: "1rem",
-              color: "#78350f",
-            }}
-          >
-            Level Configuration
-          </h3>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap", marginBottom: "1rem" }}>
-            <input
-              type="number"
-              name="level"
-              placeholder="Level"
-              value={newLevelConfig.level}
-              onChange={handleLevelConfigChange}
+          {studentDetails.transactions.map((transaction) => (
+            <div
+              key={transaction._id}
               style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                width: "100px",
                 backgroundColor: "#fef3c7",
-              }}
-            />
-            <input
-              type="number"
-              name="tasksRequired"
-              placeholder="Tasks Required"
-              value={newLevelConfig.tasksRequired}
-              onChange={handleLevelConfigChange}
-              style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
+                padding: "1rem",
                 borderRadius: "0.5rem",
-                width: "150px",
-                backgroundColor: "#fef3c7",
-              }}
-            />
-            <input
-              type="number"
-              name="reward"
-              placeholder="Reward (Moolah)"
-              value={newLevelConfig.reward}
-              onChange={handleLevelConfigChange}
-              style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                width: "150px",
-                backgroundColor: "#fef3c7",
-              }}
-            />
-            <input
-              type="text"
-              name="description"
-              placeholder="Description"
-              value={newLevelConfig.description}
-              onChange={handleLevelConfigChange}
-              style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                flex: "1",
-                backgroundColor: "#fef3c7",
-              }}
-            />
-            <button
-              onClick={saveLevelConfig}
-              style={{
-                backgroundColor: "#10b981",
-                color: "white",
-                padding: "0.5rem 1rem",
-                borderRadius: "0.5rem",
-                fontWeight: "bold",
                 boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                transition: "all 0.2s",
-                cursor: "pointer",
-              }}
-              onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-              onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-            >
-              Save Level
-            </button>
-          </div>
-          <div style={{ marginTop: "1rem" }}>
-            <h4
-              style={{
-                fontSize: "1.25rem",
-                fontWeight: "600",
-                marginBottom: "0.5rem",
-                color: "#78350f",
+                color: "#000000", // <- black text inside cards
               }}
             >
-              Current Level Configurations
-            </h4>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
-                gap: "1rem",
-              }}
-            >
-              {levelConfigs.map((config) => (
-                <div
-                  key={config.level}
-                  style={{
-                    backgroundColor: "#fef3c7",
-                    padding: "1rem",
-                    borderRadius: "0.5rem",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    border: "2px solid #fbbf24",
-                  }}
-                >
-                  <div style={{ display: "flex", justifyContent: "space-between" }}>
-                    <h4 style={{ fontSize: "1.125rem", fontWeight: "600" }}>
-                      Level {config.level}
-                    </h4>
-                    <button
-                      onClick={() => deleteLevelConfig(config.level)}
-                      style={{
-                        backgroundColor: "#ef4444",
-                        color: "white",
-                        padding: "0.25rem 0.5rem",
-                        borderRadius: "0.5rem",
-                        fontWeight: "bold",
-                        cursor: "pointer",
-                      }}
-                    >
-                      Delete
-                    </button>
-                  </div>
-                  <div style={{ marginTop: "0.5rem" }}>
-                    <p>Tasks Required: {config.tasksRequired}</p>
-                    <p>Reward: {config.reward} Moolah</p>
-                    <p>Description: {config.description}</p>
-                  </div>
-                </div>
-              ))}
+              <p style={{ fontSize: "1rem", fontWeight: "600" }}>
+                {transaction.type}: {transaction.amount} Moolah
+              </p>
+              <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                {transaction.description}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
-
-        {/* Marketplace Management Section */}
+      </div>
+      <div style={{ marginBottom: "1rem" }}>
+        <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+          Tasks
+        </h4>
         <div
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: "1.5rem",
-            borderRadius: "0.5rem",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
+            display: "grid",
+            gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+            gap: "1rem",
           }}
         >
-          <h3
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              marginBottom: "1rem",
-              color: "#78350f",
-            }}
-          >
-            Marketplace
-          </h3>
-          <form
-            onSubmit={(e) => {
-              e.preventDefault();
-              const itemName = e.target.itemName.value;
-              const price = parseInt(e.target.price.value, 10);
-              addMarketplaceItem(itemName, price);
-              e.target.reset();
-            }}
-          >
-            <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-              <input
-                type="text"
-                name="itemName"
-                placeholder="Item Name"
-                style={{
-                  border: "1px solid #e5e7eb",
-                  padding: "0.5rem",
-                  borderRadius: "0.5rem",
-                  flex: "1",
-                  backgroundColor: "#fef3c7",
-                }}
-                required
-              />
-              <input
-                type="number"
-                name="price"
-                placeholder="Price (Moolah)"
-                style={{
-                  border: "1px solid #e5e7eb",
-                  padding: "0.5rem",
-                  borderRadius: "0.5rem",
-                  width: "8rem",
-                  backgroundColor: "#fef3c7",
-                }}
-                required
-              />
-              <button
-                type="submit"
-                style={{
-                  backgroundColor: "#8b5cf6",
-                  color: "white",
-                  padding: "0.5rem 1rem",
-                  borderRadius: "0.5rem",
-                  fontWeight: "bold",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  transition: "all 0.2s",
-                  cursor: "pointer",
-                }}
-                onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-                onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-              >
-                🛒 Add Item
-              </button>
-            </div>
-          </form>
-          <div style={{ marginTop: "1rem" }}>
-            <h4
-              style={{
-                fontSize: "1.25rem",
-                fontWeight: "600",
-                marginBottom: "0.5rem",
-                color: "#78350f",
-              }}
-            >
-              Current Marketplace Items
-            </h4>
+          {studentDetails.tasks.map((task) => (
             <div
+              key={task._id}
               style={{
-                display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
-                gap: "1rem",
+                backgroundColor: "#fef3c7",
+                padding: "1rem",
+                borderRadius: "0.5rem",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                color: "#000000", // <- black text in task cards
               }}
             >
-              {marketplaceItems.map((item) => (
-                <div
-                  key={item._id}
-                  style={{
-                    backgroundColor: "#fef3c7",
-                    padding: "1rem",
-                    borderRadius: "0.5rem",
-                    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                    display: "flex",
-                    alignItems: "center",
-                    justifyContent: "space-between",
-                    border: "2px solid #fbbf24",
-                  }}
-                >
-                  <div>
-                    <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
-                      {item.name}
-                    </span>
-                    <span style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#15803d" }}>
-                      {item.price} Moolah
-                    </span>
-                  </div>
-                  <button
-                    onClick={() => deleteMarketplaceItem(item._id)}
-                    style={{
-                      backgroundColor: "#ef4444",
-                      color: "white",
-                      padding: "0.5rem 1rem",
-                      borderRadius: "0.5rem",
-                      fontWeight: "bold",
-                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      transition: "all 0.2s",
-                      cursor: "pointer",
-                    }}
-                    onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-                    onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-                  >
-                    🗑️ Delete
-                  </button>
-                </div>
-              ))}
+              <p style={{ fontSize: "1rem", fontWeight: "600" }}>{task.name}</p>
+              <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                Reward: {task.reward} Moolah
+              </p>
+              <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                Status: {task.status}
+              </p>
             </div>
-          </div>
+          ))}
         </div>
+      </div>
+      <button
+        onClick={closeStudentDetails}
+        style={{
+          backgroundColor: "#ef4444",
+          color: "#000000", // <-- black text on close button
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          fontWeight: "bold",
+          cursor: "pointer",
+        }}
+      >
+        Close
+      </button>
+    </div>
+  </div>
+)}
 
-        {/* Fines Application Section */}
+
+     {/* Level Configuration Section */}
+<div
+  style={{
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(10px)",
+  }}
+>
+  <h3
+    style={{
+      fontSize: "1.5rem",
+      fontWeight: "600",
+      marginBottom: "1rem",
+      color: "#000000",
+    }}
+  >
+    Level Configuration
+  </h3>
+
+  {/* Level Config Form */}
+  <div
+    style={{
+      display: "flex",
+      flexWrap: "wrap",
+      gap: "1rem",
+      marginBottom: "1rem",
+    }}
+  >
+    <input
+      type="number"
+      name="level"
+      placeholder="Level"
+      value={newLevelConfig.level}
+      onChange={handleLevelConfigChange}
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        width: "100px",
+        backgroundColor: "#fef3c7",
+      }}
+    />
+    <input
+      type="number"
+      name="tasksRequired"
+      placeholder="Tasks Required"
+      value={newLevelConfig.tasksRequired}
+      onChange={handleLevelConfigChange}
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        width: "150px",
+        backgroundColor: "#fef3c7",
+      }}
+    />
+    <input
+      type="number"
+      name="reward"
+      placeholder="Reward (Moolah)"
+      value={newLevelConfig.reward}
+      onChange={handleLevelConfigChange}
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        width: "150px",
+        backgroundColor: "#fef3c7",
+      }}
+    />
+    <input
+      type="text"
+      name="description"
+      placeholder="Description"
+      value={newLevelConfig.description}
+      onChange={handleLevelConfigChange}
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        flex: "1",
+        backgroundColor: "#fef3c7",
+      }}
+    />
+    <button
+      onClick={saveLevelConfig}
+      style={{
+        backgroundColor: "#10b981",
+        color: "#000000",
+        padding: "0.5rem 1rem",
+        borderRadius: "0.5rem",
+        fontWeight: "bold",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        transition: "all 0.2s",
+        cursor: "pointer",
+      }}
+      onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+    >
+      ➕ Save Level
+    </button>
+  </div>
+
+  {/* Current Level Configurations */}
+  <div style={{ marginTop: "1rem" }}>
+    <h4
+      style={{
+        fontSize: "1.25rem",
+        fontWeight: "600",
+        marginBottom: "0.5rem",
+        color: "#000000",
+      }}
+    >
+      Current Level Configurations
+    </h4>
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(300px, 1fr))",
+        gap: "1rem",
+        maxHeight: "400px",
+        overflowY: "auto",
+      }}
+    >
+      {levelConfigs.map((config) => (
         <div
+          key={config.level}
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: "1.5rem",
+            backgroundColor: "#fef3c7",
+            padding: "1rem",
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
+            border: "2px solid #fbbf24",
+            display: "flex",
+            flexDirection: "column",
+            justifyContent: "space-between",
           }}
         >
-          <h3
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              marginBottom: "1rem",
-              color: "#78350f",
-            }}
-          >
-            Apply Fine
-          </h3>
-          <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
-            <select
-              id="studentSelect"
-              style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                flex: "1",
-                backgroundColor: "#fef3c7",
-              }}
-            >
-              {students.map((student) => (
-                <option key={student._id} value={student._id}>
-                  {student.icon} {student.name} (Level {student.level})
-                </option>
-              ))}
-            </select>
-            <input
-              id="fineAmount"
-              type="number"
-              placeholder="Fine Amount"
-              style={{
-                border: "1px solid #e5e7eb",
-                padding: "0.5rem",
-                borderRadius: "0.5rem",
-                width: "8rem",
-                backgroundColor: "#fef3c7",
-              }}
-            />
+          <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+            <h4 style={{ fontSize: "1.125rem", fontWeight: "600", color: "#78350f" }}>
+              Level {config.level}
+            </h4>
             <button
-              onClick={() => {
-                const studentId = document.getElementById("studentSelect").value;
-                const amount = document.getElementById("fineAmount").value;
-                applyFine(studentId, amount);
-              }}
+              onClick={() => deleteLevelConfig(config.level)}
               style={{
                 backgroundColor: "#ef4444",
                 color: "white",
-                padding: "0.5rem 1rem",
+                padding: "0.25rem 0.75rem",
                 borderRadius: "0.5rem",
                 fontWeight: "bold",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                transition: "all 0.2s",
                 cursor: "pointer",
+                transition: "all 0.2s",
               }}
               onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
               onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
             >
-              ⚖️ Apply Fine
+              🗑️
             </button>
           </div>
+          <div style={{ marginTop: "0.5rem", color: "#4b5563" }}>
+            <p style={{ marginBottom: "0.25rem" }}>Tasks Required: {config.tasksRequired}</p>
+            <p style={{ marginBottom: "0.25rem" }}>Reward: {config.reward} Moolah</p>
+            <p>Description: {config.description}</p>
+          </div>
         </div>
+      ))}
+    </div>
+  </div>
+</div>
 
-        {/* Manage Seasons Section */}
+      {/* Marketplace Management Section */}
+<div
+  style={{
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(10px)",
+  }}
+>
+  <h3
+    style={{
+      fontSize: "1.5rem",
+      fontWeight: "600",
+      marginBottom: "1rem",
+      color: "#000000",
+    }}
+  >
+    Marketplace
+  </h3>
+
+  {/* Add New Item Form */}
+  <form
+    onSubmit={(e) => {
+      e.preventDefault();
+      const itemName = e.target.itemName.value;
+      const price = parseInt(e.target.price.value, 10);
+      addMarketplaceItem(itemName, price);
+      e.target.reset();
+    }}
+  >
+    <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+      <input
+        type="text"
+        name="itemName"
+        placeholder="Item Name"
+        style={{
+          border: "1px solid #e5e7eb",
+          padding: "0.5rem",
+          borderRadius: "0.5rem",
+          flex: "1",
+          backgroundColor: "#fef3c7",
+        }}
+        required
+      />
+      <input
+        type="number"
+        name="price"
+        placeholder="Price (Moolah)"
+        style={{
+          border: "1px solid #e5e7eb",
+          padding: "0.5rem",
+          borderRadius: "0.5rem",
+          width: "8rem",
+          backgroundColor: "#fef3c7",
+        }}
+        required
+      />
+      <button
+        type="submit"
+        style={{
+          backgroundColor: "#8b5cf6",
+          color: "#000000",
+          padding: "0.5rem 1rem",
+          borderRadius: "0.5rem",
+          fontWeight: "bold",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          transition: "all 0.2s",
+          cursor: "pointer",
+        }}
+        onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+        onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+      >
+        🛒 Add Item
+      </button>
+    </div>
+  </form>
+
+  {/* Current Items Display */}
+  <div style={{ marginTop: "1.5rem" }}>
+    <h4
+      style={{
+        fontSize: "1.25rem",
+        fontWeight: "600",
+        marginBottom: "0.5rem",
+        color: "#000000",
+      }}
+    >
+      Current Marketplace Items
+    </h4>
+
+    <div
+      style={{
+        display: "grid",
+        gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
+        gap: "1rem",
+        maxHeight: "400px",
+        overflowY: "auto",
+      }}
+    >
+      {marketplaceItems.map((item) => (
         <div
+          key={item._id}
           style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: "1.5rem",
+            backgroundColor: "#fef3c7",
+            padding: "1rem",
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
+            border: "2px solid #fbbf24",
+            display: "flex",
+            justifyContent: "space-between",
+            alignItems: "center",
           }}
         >
-          <h3
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              marginBottom: "1rem",
-              color: "#78350f",
-            }}
-          >
-            Manage Seasons
-          </h3>
+          <div style={{ display: "flex", flexDirection: "column" }}>
+            <span style={{ fontSize: "1.125rem", fontWeight: "600", color: "#78350f" }}>
+              {item.name}
+            </span>
+            <span style={{ fontSize: "1rem", fontWeight: "bold", color: "#15803d" }}>
+              {item.price} Moolah
+            </span>
+          </div>
           <button
-            onClick={() => {
-              // Navigate to the /seasonselector route
-              window.location.href = "/seasonselector";
-            }}
+            onClick={() => deleteMarketplaceItem(item._id)}
             style={{
-              backgroundColor: "#3b82f6",
+              backgroundColor: "#ef4444",
               color: "white",
               padding: "0.5rem 1rem",
               borderRadius: "0.5rem",
@@ -1858,10 +1771,131 @@ const TeacherDashboard = () => {
             onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
             onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
           >
-            Go to Season Selector
+            🗑️
           </button>
         </div>
-      </div>
+      ))}
+    </div>
+  </div>
+</div>
+
+
+   {/* Fines Application Section */}
+<div
+  style={{
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(10px)",
+  }}
+>
+  <h3
+    style={{
+      fontSize: "1.5rem",
+      fontWeight: "600",
+      marginBottom: "1rem",
+      color: "#000000",
+    }}
+  >
+    Apply Fine
+  </h3>
+
+  <div style={{ display: "flex", gap: "1rem", flexWrap: "wrap" }}>
+    <select
+      id="studentSelect"
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        flex: "1",
+        backgroundColor: "#fef3c7",
+      }}
+    >
+      {students.map((student) => (
+        <option key={student._id} value={student._id}>
+          {student.icon} {student.name} (Level {student.level})
+        </option>
+      ))}
+    </select>
+    <input
+      id="fineAmount"
+      type="number"
+      placeholder="Fine Amount"
+      style={{
+        border: "1px solid #e5e7eb",
+        padding: "0.5rem",
+        borderRadius: "0.5rem",
+        width: "8rem",
+        backgroundColor: "#fef3c7",
+      }}
+    />
+    <button
+      onClick={() => {
+        const studentId = document.getElementById("studentSelect").value;
+        const amount = document.getElementById("fineAmount").value;
+        applyFine(studentId, amount);
+      }}
+      style={{
+        backgroundColor: "#ef4444",
+        color: "white",
+        padding: "0.5rem 1rem",
+        borderRadius: "0.5rem",
+        fontWeight: "bold",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        transition: "all 0.2s",
+        cursor: "pointer",
+      }}
+      onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+    >
+      ⚖️ Apply Fine
+    </button>
+  </div>
+</div>
+
+{/* Manage Seasons Section */}
+<div
+  style={{
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(10px)",
+  }}
+>
+  <h3
+    style={{
+      fontSize: "1.5rem",
+      fontWeight: "600",
+      marginBottom: "1rem",
+      color: "#000000",
+    }}
+  >
+    Manage Seasons
+  </h3>
+
+  <button
+    onClick={() => {
+      window.location.href = "/seasonselector";
+    }}
+    style={{
+      backgroundColor: "#3b82f6",
+      color: "white",
+      padding: "0.5rem 1rem",
+      borderRadius: "0.5rem",
+      fontWeight: "bold",
+      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+      transition: "all 0.2s",
+      cursor: "pointer",
+    }}
+    onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+    onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+  >
+    📅 Go to Season Selector
+  </button>
+</div>
+    </div>
     </div>
   );
 };
