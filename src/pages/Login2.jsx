@@ -148,15 +148,28 @@ function Login({ setIsAuthenticated }) {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="flex flex-col items-center gap-6"
-          style={{ width: "100%", maxWidth: 400, padding: "0 1rem" }}
+          className="flex flex-col items-center gap-4"
+          style={{
+            width: "100%",
+            maxWidth: 300,
+            padding: "0 1rem",
+            margin: "0 auto",
+            alignItems: "center",
+            justifyContent: "center"
+          }}
         >
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => handleRoleSelection("teacher")}
-            className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4"
-            style={{ width: "100%", margin: 0 }}
+            className="game-button bg-yellow-500 text-white font-bold rounded-full shadow-lg relative"
+            style={{
+              width: "100%",
+              margin: 0,
+              fontSize: "1rem",
+              padding: "0.75rem 0",
+              minWidth: 0
+            }}
           >
             🧑‍🏫 Teacher
           </motion.button>
@@ -164,8 +177,14 @@ function Login({ setIsAuthenticated }) {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => handleRoleSelection("student")}
-            className="game-button bg-green-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4 "
-            style={{ width: "100%", margin: 0 }}
+            className="game-button bg-green-500 text-white font-bold rounded-full shadow-lg relative"
+            style={{
+              width: "100%",
+              margin: 0,
+              fontSize: "1rem",
+              padding: "0.75rem 0",
+              minWidth: 0
+            }}
           >
             👩‍🎓 Student
           </motion.button>
