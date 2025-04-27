@@ -1,44 +1,110 @@
-const express = require("express");
-const User = require("../models/User");
-const Student = require("../models/Student"); // Import the Student model
-const router = express.Router();
+import { BrowserRouter as Router, Routes, Route, Navigate } from "react-router-dom";
+import { useEffect, useState } from "react";
+import axios from "axios";
+import Login from "./pages/Login";
+import Login2 from "./pages/Login2"; // New mobile login component
+import TeacherDashboard from "./pages/TeacherDashboard";
+import StudentDashboard from "./pages/StudentDashboard";
+import Test from "./pages/Test";
 
-// User login
-router.post("/login", async (req, res) => {
-  const { username, password } = req.body;
+function App() {
+  // Track if the viewport is mobile-sized
+  const [isMobile, setIsMobile] = useState(false);
+  const [isAuthenticated, setIsAuthenticated] = useState(false);
+  const [isLoading, setIsLoading] = useState(true);
 
-  try {
-    // Find the user in the database
-    const user = await User.findOne({ username });
-
-    if (!user) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    // Check if the password matches (plaintext comparison)
-    if (user.password !== password) {
-      return res.status(401).json({ error: "Invalid password" });
-    }
-
-    // If the user is a student, fetch the student data
-    if (user.role === "student") {
-      const student = await Student.findOne({ name: username }); // Find the student by name (or another unique field)
-      if (!student) {
-        return res.status(404).json({ error: "Student data not found" });
+  // Check authentication status on page load
+  useEffect(() => {
+    const checkAuth = async () => {
+      try {
+        const response = await axios.get("https://moolandia-mern-app.onrender.com/api/auth/check-auth", {
+          withCredentials: true
+        });
+        setIsAuthenticated(response.data.isAuthenticated);
+      } catch (error) {
+        setIsAuthenticated(false);
+      } finally {
+        setIsLoading(false);
       }
+    };
 
-      // Return the user's role and studentId
-      return res.json({
-        role: user.role,
-        studentId: student._id, // Return the student's _id
-      });
+    checkAuth();
+  }, []);
+
+  useEffect(() => {
+    function handleResize() {
+      setIsMobile(window.innerWidth <= 768); // Adjust breakpoint as needed
     }
+    handleResize(); // Check initial width
+    window.addEventListener("resize", handleResize);
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
-    // For teachers, just return the role
-    res.json({ role: user.role });
-  } catch (err) {
-    res.status(500).json({ error: err.message });
-  }
-});
+  // Background image effect
+  useEffect(() => {
+    const fetchBackgroundImage = async () => {
+      try {
+          const response = await axios.get("https://moolandia-mern-app.onrender.com/api/season-images");
+        if (response.data.success) {
+          // Find the image that is set as the background
+          const bgImage = response.data.images.find((img) => img.isBackground);
+          if (bgImage) {
+            const imageUrl = `https://moolandia-mern-app.onrender.com${bgImage.imagePath || bgImage.path}`;
+            document.body.style.backgroundImage = `url(${imageUrl})`;
+            document.body.style.backgroundSize = "cover";
+            document.body.style.backgroundRepeat = "no-repeat";
+          }
+        }
+      } catch (error) {
+        console.error("Error fetching background image:", error);
+      }
+    };
 
-module.exports = router;
+    fetchBackgroundImage();
+  }, []);
+
+  // Protected Route component
+  const ProtectedRoute = ({ children }) => {
+    if (isLoading) {
+      return <div>Loading...</div>; // You can replace this with a proper loading component
+    }
+    return isAuthenticated ? children : <Navigate to="/" replace />;
+  };
+
+  return (
+    <Router>
+      <Routes>
+        {/* Public routes */}
+        <Route path="/" element={isMobile ? <Login2 /> : <Login />} />
+        
+        {/* Protected routes */}
+        <Route 
+          path="/teacher-dashboard" 
+          element={
+            <ProtectedRoute>
+              <TeacherDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/student/:id/dashboard" 
+          element={
+            <ProtectedRoute>
+              <StudentDashboard />
+            </ProtectedRoute>
+          } 
+        />
+        <Route 
+          path="/seasonselector" 
+          element={
+            <ProtectedRoute>
+              <Test />
+            </ProtectedRoute>
+          } 
+        />
+      </Routes>
+    </Router>
+  );
+}
+
+export default App;
