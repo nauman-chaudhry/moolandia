@@ -498,6 +498,7 @@ const TeacherDashboard = () => {
     <div
       style={{
         width: "100vw",
+        maxWidth: "100vw",
         minHeight: "100vh",
         backgroundImage: bg ? `url(${bg})` : "none",
         backgroundSize: "cover",
@@ -508,19 +509,21 @@ const TeacherDashboard = () => {
         flexDirection: "column",
         alignItems: "center",
         overflow: "auto",
-        padding: "2rem",
+        padding: "clamp(1rem, 5vw, 2rem)",
         color: "black",
       }}
     >
       {/* Header */}
       <h2
         style={{
-          fontSize: "2.25rem",
+          fontSize: "clamp(1.25rem, 4vw, 2.25rem)",
           fontWeight: "bold",
           marginBottom: "1.5rem",
           textAlign: "center",
           color: "black",
           textShadow: "none",
+          width: "100%",
+          maxWidth: "100vw",
         }}
       >
         🏰 Moolandia Classroom Economy
@@ -530,12 +533,13 @@ const TeacherDashboard = () => {
       <div
         style={{
           width: "100%",
-          maxWidth: "80rem",
+          maxWidth: "1200px",
           margin: "0 auto",
           flex: "1",
           display: "flex",
           flexDirection: "column",
           gap: "1.5rem",
+          maxWidth: "100vw",
         }}
       >
         {/* Create Student Section */}
@@ -676,8 +680,9 @@ const TeacherDashboard = () => {
             <div
               style={{
                 display: "grid",
-                gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                 gap: "1rem",
+                width: "100%",
               }}
             >
               {classes.map((cls) => (
@@ -763,8 +768,9 @@ const TeacherDashboard = () => {
                   <div
                     style={{
                       display: "grid",
-                      gridTemplateColumns: "repeat(auto-fit, minmax(200px, 1fr))",
+                      gridTemplateColumns: "repeat(auto-fit, minmax(250px, 1fr))",
                       gap: "1rem",
+                      width: "100%",
                     }}
                   >
                     {selectedClassDetails.students.map((student) => (
