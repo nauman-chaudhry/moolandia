@@ -266,6 +266,7 @@ const StudentDashboard = () => {
     <div
       style={{
         width: "100vw",
+        maxWidth: "100vw",
         minHeight: "100vh",
         backgroundImage: bg ? `url(${bg})` : "none",
         backgroundSize: "cover",
@@ -276,21 +277,22 @@ const StudentDashboard = () => {
         flexDirection: "column",
         alignItems: "center",
         overflow: "auto",
-        padding: "clamp(1rem, 5%, 2rem)",
+        padding: "clamp(1rem, 5vw, 2rem)",
+        color: "black",
       }}
     >
       {/* Header */}
       <h2
         style={{
-          fontSize: "clamp(1.5rem, 4vw, 2.25rem)",
+          fontSize: "clamp(1.25rem, 4vw, 2.25rem)",
           fontWeight: "bold",
           margin: "2rem 0",
           textAlign: "center",
-          color: "#fbbf24",
-          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+          color: "black",
+          textShadow: "none",
           width: "100%",
-          maxWidth: "1400px", // Match main container width
-          padding: "0 clamp(1rem, 5%, 2rem)", // Equal side padding
+          maxWidth: "100vw",
+          padding: "0 clamp(1rem, 5vw, 2rem)",
         }}
       >
         🏰 Moolandia Student Dashboard
@@ -301,6 +303,7 @@ const StudentDashboard = () => {
         style={{
           width: "100%",
           maxWidth: "1200px",
+          maxWidth: "100vw",
           margin: "0 auto",
           flex: "1",
           display: "flex",
@@ -325,13 +328,14 @@ const StudentDashboard = () => {
               boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
               backdropFilter: "blur(10px)",
               textAlign: "center",
+              color: "black",
             }}
           >
-            <h3 style={{ fontSize: "1.25rem", marginBottom: "0.5rem", color: "#78350f" }}>
+            <h3 style={{ fontSize: "1.25rem", marginBottom: "0.5rem", color: "black" }}>
               Your Balance
             </h3>
             <div style={{ display: "flex", alignItems: "center", justifyContent: "center", gap: "0.5rem" }}>
-              <p style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", fontWeight: "bold", color: "#15803d" }}>
+              <p style={{ fontSize: "clamp(1.25rem, 3vw, 2rem)", fontWeight: "bold", color: "black" }}>
                 {balance} Moolah
               </p>
               <img
@@ -361,7 +365,7 @@ const StudentDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Your Class
@@ -371,7 +375,7 @@ const StudentDashboard = () => {
               <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
                 {studentClass.name}
               </span>
-              <div style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+              <div style={{ fontSize: "0.875rem", color: "black" }}>
                 {studentClass.students?.length || 0} Students
               </div>
             </div>
@@ -395,7 +399,7 @@ const StudentDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Level {level}
@@ -428,7 +432,7 @@ const StudentDashboard = () => {
                 style={{
                   marginTop: "0.5rem",
                   fontSize: "0.875rem",
-                  color: "#4b5563",
+                  color: "black",
                 }}
               >
                 {completedTasks} /{" "}
@@ -439,7 +443,7 @@ const StudentDashboard = () => {
                 style={{
                   marginTop: "0.5rem",
                   fontSize: "0.875rem",
-                  color: "#4b5563",
+                  color: "black",
                 }}
               >
                 Level reward:{" "}
@@ -468,7 +472,7 @@ const StudentDashboard = () => {
               backdropFilter: "blur(10px)",
             }}
           >
-            <h3 style={{ fontSize: "1.25rem", marginBottom: "1rem", color: "#78350f" }}>
+            <h3 style={{ fontSize: "1.25rem", marginBottom: "1rem", color: "black" }}>
               To-Do Tasks
             </h3>
             <div
@@ -502,13 +506,13 @@ const StudentDashboard = () => {
                 >
                   {task.name}
                 </span>
-                <div style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                <div style={{ fontSize: "0.875rem", color: "black" }}>
                   Reward: {task.reward} Moolah
                 </div>
-                <div style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                <div style={{ fontSize: "0.875rem", color: "black" }}>
                   Status: {task.status}
                 </div>
-                <div style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                <div style={{ fontSize: "0.875rem", color: "black" }}>
                   Comment: {task.teacherComment || "No comment"}
                 </div>
                 {!task.completed && (
