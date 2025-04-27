@@ -130,9 +130,15 @@ function Login({ setIsAuthenticated }) {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         className="mb-8"
-        style={{ paddingLeft: "250px", paddingTop: "150px" }}
+        style={{
+          paddingTop: "2rem",
+          paddingBottom: "1rem",
+          width: "100%",
+          display: "flex",
+          justifyContent: "center"
+        }}
       >
-        <img src={logo} alt="Game Logo" className="w-30 ml-4" />
+        <img src={logo} alt="Game Logo" style={{ width: "60px", maxWidth: "20vw" }} />
       </motion.div>
 
       {/* Role Selection or Login Form */}
@@ -143,13 +149,14 @@ function Login({ setIsAuthenticated }) {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="flex flex-col items-center gap-6"
-          style={{ paddingLeft: "710px"  }}
+          style={{ width: "100%", maxWidth: 400, padding: "0 1rem" }}
         >
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => handleRoleSelection("teacher")}
             className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4"
+            style={{ width: "100%", margin: 0 }}
           >
             🧑‍🏫 Teacher
           </motion.button>
@@ -158,7 +165,7 @@ function Login({ setIsAuthenticated }) {
             whileTap={{ scale: 0.9 }}
             onClick={() => handleRoleSelection("student")}
             className="game-button bg-green-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4 "
-            style={{ marginLeft: "50px" }}
+            style={{ width: "100%", margin: 0 }}
           >
             👩‍🎓 Student
           </motion.button>
@@ -172,6 +179,10 @@ function Login({ setIsAuthenticated }) {
           className="bg-transparent p-8 rounded-3xl shadow-lg border-2 border-yellow-400 relative"
           style={{
             boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
+            width: "100%",
+            maxWidth: 400,
+            margin: "0 auto",
+            padding: "2rem 1rem"
           }}
         >
           {/* Optional Glowing Effect */}
@@ -189,13 +200,17 @@ function Login({ setIsAuthenticated }) {
             style={{
               textShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
               fontFamily: "'Cinzel', serif",
+              fontSize: "2rem",
+              margin: 0,
+              width: "100%",
+              textAlign: "center"
             }}
           >
             {role === "teacher" ? "Teacher Login" : "Student Login"}
           </h2>
-          <form onSubmit={handleLogin} className="flex flex-col gap-6">
+          <form onSubmit={handleLogin} className="flex flex-col gap-6" style={{ width: "100%" }}>
             {/* Username Input */}
-            <div className="relative">
+            <div className="relative" style={{ width: "100%" }}>
               <input
                 type="text"
                 placeholder="Username"
@@ -204,15 +219,16 @@ function Login({ setIsAuthenticated }) {
                 className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 "
                 style={{
                   boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginTop:"10px"
+                  fontSize: "1.1rem",
+                  width: "100%",
+                  margin: 0
                 }}
                 required
               />
             </div>
 
             {/* Password Input */}
-            <div className="relative">
+            <div className="relative" style={{ width: "100%" }}>
               <input
                 type="password"
                 placeholder="Password"
@@ -221,8 +237,9 @@ function Login({ setIsAuthenticated }) {
                 className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 "
                 style={{
                   boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginTop:"10px"
+                  fontSize: "1.1rem",
+                  width: "100%",
+                  margin: 0
                 }}
                 required
               />
@@ -237,7 +254,8 @@ function Login({ setIsAuthenticated }) {
                 className="text-red-500 text-sm text-center "
                 style={{
                   textShadow: "0 0 5px rgba(255, 0, 0, 0.8)",
-                  marginTop:"10px"
+                  margin: 0,
+                  width: "100%"
                 }}
               >
                 {error}
@@ -252,7 +270,9 @@ function Login({ setIsAuthenticated }) {
               className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative "
               style={{
                 boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
-                marginTop:"10px"
+                width: "100%",
+                fontSize: "1.1rem",
+                margin: 0
               }}
             >
               Login
@@ -267,7 +287,8 @@ function Login({ setIsAuthenticated }) {
             className="mt-4 text-sm text-yellow-400 hover:text-yellow-300 text-center w-full "
             style={{
               textShadow: "0 0 5px rgba(255, 223, 0, 0.8)",
-              marginTop:"10px"
+              margin: 0,
+              width: "100%"
             }}
           >
             ← Back to Role Selection
