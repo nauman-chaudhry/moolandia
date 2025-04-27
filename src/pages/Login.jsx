@@ -54,10 +54,11 @@ function Login() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/season-images`);
+        const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'https://moolandia-mern-app.onrender.com';
+        const response = await axios.get(`${apiBaseUrl}/api/season-images`);
         if (response.data.success && response.data.images.length > 0) {
           const bgImage = response.data.images.find((img) => img.isBackground) || response.data.images[0];
-          const imageUrl = `${process.env.REACT_APP_API_BASE_URL}${bgImage.path || bgImage.imagePath}`;
+          const imageUrl = `${apiBaseUrl}${bgImage.path || bgImage.imagePath}`;
           setBg(imageUrl);
         }
       } catch (err) {
@@ -86,13 +87,18 @@ function Login() {
     }
 
     try {
-      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/login`, {
+      const apiBaseUrl = process.env.REACT_APP_API_BASE_URL || 'https://moolandia-mern-app.onrender.com';
+      console.log("API Base URL:", apiBaseUrl);
+      
+      const response = await fetch(`${apiBaseUrl}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, role }),
       });
 
+      console.log("Login response status:", response.status);
       const data = await response.json();
+      console.log("Login response data:", data);
 
       if (response.ok) {
         successSound.play();
@@ -106,6 +112,7 @@ function Login() {
         errorSound.play();
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("An error occurred. Please try again.");
       errorSound.play();
     }
