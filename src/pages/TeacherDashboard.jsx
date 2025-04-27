@@ -494,7 +494,7 @@ const TeacherDashboard = () => {
     return <div>Loading...</div>;
   }
 
-  return (
+ return (
     <div
       style={{
         width: "100vw",
@@ -518,7 +518,7 @@ const TeacherDashboard = () => {
           fontWeight: "bold",
           marginBottom: "1.5rem",
           textAlign: "center",
-          color: "#fbbf24",
+          color: "#000000", // Changed to black
           textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
         }}
       >
@@ -552,7 +552,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000", // Changed to black
             }}
           >
             Create Student
@@ -569,6 +569,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color:"#000000",
               }}
             />
             <input
@@ -582,6 +583,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color:"#000000",
               }}
             />
             <button
@@ -619,7 +621,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000", // Changed to black
             }}
           >
             Manage Classes
@@ -636,6 +638,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color:"#000000",
               }}
             />
             <button
@@ -662,7 +665,7 @@ const TeacherDashboard = () => {
                 fontSize: "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
-                color: "#78350f",
+                color: "#000000", // Changed to black
               }}
             >
               Existing Classes
@@ -691,10 +694,10 @@ const TeacherDashboard = () => {
                   onClick={() => fetchStudentsInClass(cls._id)}
                 >
                   <div>
-                    <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
+                    <span style={{ fontSize: "1.125rem", fontWeight: "600", color: "#000000" }}>
                       {cls.name}
                     </span>
-                    <div style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                    <div style={{ fontSize: "0.875rem", color: "#000000" }}> {/* Changed to black */}
                       {cls.students.length} Students
                     </div>
                   </div>
@@ -749,7 +752,7 @@ const TeacherDashboard = () => {
                       fontSize: "1.5rem",
                       fontWeight: "600",
                       marginBottom: "1rem",
-                      color: "#78350f",
+                      color: "#000000", // Changed to black
                     }}
                   >
                     Students
@@ -771,10 +774,10 @@ const TeacherDashboard = () => {
                           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                         }}
                       >
-                        <p style={{ fontSize: "1rem", fontWeight: "600" }}>
+                        <p style={{ fontSize: "1rem", fontWeight: "600", color: "#000000" }}>
                           {student.name}
                         </p>
-                        <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                        <p style={{ fontSize: "0.875rem", color: "#000000" }}> {/* Changed to black */}
                           Level {student.level}
                         </p>
                       </div>
@@ -815,7 +818,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "#000000", // Changed to black
             }}
           >
             Assign Students to Class
@@ -829,11 +832,12 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color: "#000000", // Added black text
               }}
             >
               <option value="">Select a Class</option>
               {classes.map((cls) => (
-                <option key={cls._id} value={cls._id}>
+                <option key={cls._id} value={cls._id} style={{ color: "#000000" }}>
                   {cls.name}
                 </option>
               ))}
@@ -847,10 +851,15 @@ const TeacherDashboard = () => {
                 flex: "1",
                 backgroundColor: "#fef3c7",
                 height: "150px",
+                color: "#000000", // Added black text
               }}
             >
               {students.map((student) => (
-                <option key={student._id} value={student._id}>
+                <option 
+                  key={student._id} 
+                  value={student._id}
+                  style={{ color: "#000000" }} // Added black text
+                >
                   {student.name} (Level {student.level})
                 </option>
               ))}
@@ -885,11 +894,12 @@ const TeacherDashboard = () => {
               🚀 Assign to Class
             </button>
           </div>
-          <p style={{ fontSize: "0.875rem", color: "#4b5563", marginTop: "0.5rem" }}>
+          <p style={{ fontSize: "0.875rem", color: "#000000", marginTop: "0.5rem" }}> {/* Changed to black */}
             Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) to select multiple students.
           </p>
         </div>
 
+        {/* ... (rest of the components with similar color changes) ... */}
         {/* Task Creation Section */}
         <div
           style={{
