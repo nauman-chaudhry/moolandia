@@ -15,6 +15,8 @@ function Login() {
   const [bg, setBg] = useState(null);
   const [isMobile, setIsMobile] = useState(false);
 
+  console.log("API Base URL:", process.env.REACT_APP_API_BASE_URL);
+
   // Added mobile detection
   useEffect(() => {
     const checkMobile = () => {
@@ -52,10 +54,10 @@ function Login() {
   useEffect(() => {
     const fetchBackgroundImage = async () => {
       try {
-        const response = await axios.get("http://localhost:5000/api/season-images");
+        const response = await axios.get(`${process.env.REACT_APP_API_BASE_URL}/api/season-images`);
         if (response.data.success && response.data.images.length > 0) {
           const bgImage = response.data.images.find((img) => img.isBackground) || response.data.images[0];
-          const imageUrl = `http://localhost:5000${bgImage.path || bgImage.imagePath}`;
+          const imageUrl = `${process.env.REACT_APP_API_BASE_URL}${bgImage.path || bgImage.imagePath}`;
           setBg(imageUrl);
         }
       } catch (err) {
@@ -84,25 +86,20 @@ function Login() {
     }
 
     try {
-      const response = await fetch("/api/auth/login", {
+      const response = await fetch(`${process.env.REACT_APP_API_BASE_URL}/api/auth/login`, {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, role }),
       });
 
       const data = await response.json();
 
       if (response.ok) {
-        if (data.role === role) {
-          successSound.play();
-          if (role === "teacher") {
-            navigate("/teacher-dashboard");
-          } else {
-            navigate(`/student/${data.studentId}/dashboard`);
-          }
+        successSound.play();
+        if (role === "teacher") {
+          navigate("/teacher-dashboard");
         } else {
-          setError("Invalid role for this user.");
-          errorSound.play();
+          navigate(`/student/${data.studentId}/dashboard`);
         }
       } else {
         setError(data.error || "Login failed");
