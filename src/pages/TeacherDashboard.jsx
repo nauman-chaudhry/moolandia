@@ -511,6 +511,7 @@ const TeacherDashboard = () => {
         overflow: "auto",
         padding: "clamp(1rem, 5vw, 2rem)",
         color: "black",
+        boxSizing: "border-box",
       }}
     >
       {/* Header */}
@@ -524,6 +525,7 @@ const TeacherDashboard = () => {
           textShadow: "none",
           width: "100%",
           maxWidth: "100vw",
+          boxSizing: "border-box",
         }}
       >
         🏰 Moolandia Classroom Economy
@@ -539,6 +541,7 @@ const TeacherDashboard = () => {
           flexDirection: "column",
           gap: "1.5rem",
           maxWidth: "100vw",
+          boxSizing: "border-box",
         }}
       >
         {/* Create Student Section */}
