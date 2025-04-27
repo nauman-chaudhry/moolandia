@@ -49,25 +49,37 @@ function Login({ setIsAuthenticated }) {
     e.preventDefault();
     buttonClickSound.play();
     try {
+      console.log("Attempting login with:", { username, password, role });
       const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({ username, password, role }),
       });
+      
       const data = await response.json();
+      console.log("Login response:", data);
+
       if (response.ok) {
-        localStorage.setItem("token", data.token);
-        localStorage.setItem("userType", data.userType);
-        localStorage.setItem("userId", data.userId);
-        if (role === "teacher") {
-          navigate("/teacher-dashboard");
+        if (data.token) {
+          localStorage.setItem("token", data.token);
+          localStorage.setItem("userType", data.userType);
+          localStorage.setItem("userId", data.userId);
+          
+          if (role === "teacher") {
+            navigate("/teacher-dashboard");
+          } else if (role === "student" && data.studentId) {
+            navigate(`/student/${data.studentId}/dashboard`);
+          } else {
+            setError("Invalid role or missing student ID");
+          }
         } else {
-          navigate(`/student/${data.studentId}/dashboard`);
+          setError("No token received from server");
         }
       } else {
-        setError(data.message || "Login failed");
+        setError(data.message || "Login failed. Please check your credentials.");
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("An error occurred. Please try again.");
     }
   };
