@@ -279,6 +279,7 @@ const StudentDashboard = () => {
         overflow: "auto",
         padding: "clamp(1rem, 5vw, 2rem)",
         color: "black",
+        boxSizing: "border-box",
       }}
     >
       {/* Header */}
@@ -292,6 +293,7 @@ const StudentDashboard = () => {
           textShadow: "none",
           width: "100%",
           maxWidth: "100vw",
+          boxSizing: "border-box",
           padding: "0 clamp(1rem, 5vw, 2rem)",
         }}
       >
@@ -302,12 +304,13 @@ const StudentDashboard = () => {
       <div
         style={{
           width: "100%",
-          maxWidth: "100vw",
           margin: "0 auto",
           flex: "1",
           display: "flex",
           flexDirection: "column",
           gap: "1rem",
+          maxWidth: "100vw",
+          boxSizing: "border-box",
         }}
       >
         {/* Top Stats Row */}
