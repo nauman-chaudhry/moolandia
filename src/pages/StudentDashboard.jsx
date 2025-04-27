@@ -302,7 +302,6 @@ const StudentDashboard = () => {
       <div
         style={{
           width: "100%",
-          maxWidth: "1200px",
           maxWidth: "100vw",
           margin: "0 auto",
           flex: "1",
