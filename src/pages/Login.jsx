@@ -6,7 +6,7 @@ import axios from "axios";
 import logo from "./LogoColor.png";
 import coinImage from "./coin.png"; // Added coin import
 
-function Login() {
+function Login({ setIsAuthenticated }) {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
   const [username, setUsername] = useState("");
@@ -102,12 +102,29 @@ function Login() {
 
       if (response.ok) {
         successSound.play();
+        console.log("Login successful, navigating to dashboard...");
+        console.log("Role:", role);
+        console.log("Student ID:", data.studentId);
+
+        // Store the authentication data
+        localStorage.setItem('token', data.token);
+        localStorage.setItem('role', data.role);
+        if (data.studentId) {
+          localStorage.setItem('studentId', data.studentId);
+        }
+
+        // Set authentication state
+        setIsAuthenticated(true);
+
         if (role === "teacher") {
-          navigate("/teacher-dashboard");
+          console.log("Navigating to teacher dashboard");
+          navigate("/teacher-dashboard", { replace: true });
         } else {
-          navigate(`/student/${data.studentId}/dashboard`);
+          console.log("Navigating to student dashboard");
+          navigate(`/student/${data.studentId}/dashboard`, { replace: true });
         }
       } else {
+        console.error("Login failed:", data.error);
         setError(data.error || "Login failed");
         errorSound.play();
       }
