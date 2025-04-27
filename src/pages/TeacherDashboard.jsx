@@ -509,6 +509,7 @@ const TeacherDashboard = () => {
         alignItems: "center",
         overflow: "auto",
         padding: "2rem",
+        color: "black",
       }}
     >
       {/* Header */}
@@ -518,8 +519,8 @@ const TeacherDashboard = () => {
           fontWeight: "bold",
           marginBottom: "1.5rem",
           textAlign: "center",
-          color: "#000000", // Changed to black
-          textShadow: "2px 2px 4px rgba(0, 0, 0, 0.5)",
+          color: "black",
+          textShadow: "none",
         }}
       >
         🏰 Moolandia Classroom Economy
@@ -545,6 +546,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -552,7 +554,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#000000", // Changed to black
+              color: "black",
             }}
           >
             Create Student
@@ -614,6 +616,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -621,7 +624,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#000000", // Changed to black
+              color: "black",
             }}
           >
             Manage Classes
@@ -665,7 +668,7 @@ const TeacherDashboard = () => {
                 fontSize: "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
-                color: "#000000", // Changed to black
+                color: "black",
               }}
             >
               Existing Classes
@@ -694,10 +697,10 @@ const TeacherDashboard = () => {
                   onClick={() => fetchStudentsInClass(cls._id)}
                 >
                   <div>
-                    <span style={{ fontSize: "1.125rem", fontWeight: "600", color: "#000000" }}>
+                    <span style={{ fontSize: "1.125rem", fontWeight: "600", color: "black" }}>
                       {cls.name}
                     </span>
-                    <div style={{ fontSize: "0.875rem", color: "#000000" }}> {/* Changed to black */}
+                    <div style={{ fontSize: "0.875rem", color: "black" }}>
                       {cls.students.length} Students
                     </div>
                   </div>
@@ -752,7 +755,7 @@ const TeacherDashboard = () => {
                       fontSize: "1.5rem",
                       fontWeight: "600",
                       marginBottom: "1rem",
-                      color: "#000000", // Changed to black
+                      color: "black",
                     }}
                   >
                     Students
@@ -774,10 +777,10 @@ const TeacherDashboard = () => {
                           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
                         }}
                       >
-                        <p style={{ fontSize: "1rem", fontWeight: "600", color: "#000000" }}>
+                        <p style={{ fontSize: "1rem", fontWeight: "600", color: "black" }}>
                           {student.name}
                         </p>
-                        <p style={{ fontSize: "0.875rem", color: "#000000" }}> {/* Changed to black */}
+                        <p style={{ fontSize: "0.875rem", color: "black" }}>
                           Level {student.level}
                         </p>
                       </div>
@@ -811,6 +814,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -818,7 +822,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#000000", // Changed to black
+              color: "black",
             }}
           >
             Assign Students to Class
@@ -832,12 +836,12 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
-                color: "#000000", // Added black text
+                color: "black",
               }}
             >
               <option value="">Select a Class</option>
               {classes.map((cls) => (
-                <option key={cls._id} value={cls._id} style={{ color: "#000000" }}>
+                <option key={cls._id} value={cls._id} style={{ color: "black" }}>
                   {cls.name}
                 </option>
               ))}
@@ -851,14 +855,14 @@ const TeacherDashboard = () => {
                 flex: "1",
                 backgroundColor: "#fef3c7",
                 height: "150px",
-                color: "#000000", // Added black text
+                color: "black",
               }}
             >
               {students.map((student) => (
                 <option 
                   key={student._id} 
                   value={student._id}
-                  style={{ color: "#000000" }} // Added black text
+                  style={{ color: "black" }}
                 >
                   {student.name} (Level {student.level})
                 </option>
@@ -894,12 +898,11 @@ const TeacherDashboard = () => {
               🚀 Assign to Class
             </button>
           </div>
-          <p style={{ fontSize: "0.875rem", color: "#000000", marginTop: "0.5rem" }}> {/* Changed to black */}
+          <p style={{ fontSize: "0.875rem", color: "black", marginTop: "0.5rem" }}>
             Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) to select multiple students.
           </p>
         </div>
 
-        {/* ... (rest of the components with similar color changes) ... */}
         {/* Task Creation Section */}
         <div
           style={{
@@ -908,6 +911,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -915,7 +919,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Create Task
@@ -940,6 +944,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   flex: "1",
                   backgroundColor: "#fef3c7",
+                  color: "black",
                 }}
                 required
               />
@@ -953,6 +958,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   width: "8rem",
                   backgroundColor: "#fef3c7",
+                  color: "black",
                 }}
                 required
               />
@@ -985,6 +991,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -992,7 +999,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Assign Task
@@ -1006,6 +1013,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color: "black",
               }}
             >
               {tasks.map((task) => (
@@ -1024,6 +1032,7 @@ const TeacherDashboard = () => {
                 flex: "1",
                 backgroundColor: "#fef3c7",
                 height: "150px",
+                color: "black",
               }}
             >
               {students.map((student) => (
@@ -1070,7 +1079,7 @@ const TeacherDashboard = () => {
               🗑️ Delete Task
             </button>
           </div>
-          <p style={{ fontSize: "0.875rem", color: "#4b5563", marginTop: "0.5rem" }}>
+          <p style={{ fontSize: "0.875rem", color: "black", marginTop: "0.5rem" }}>
             Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) to select multiple students.
           </p>
         </div>
@@ -1083,6 +1092,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -1090,7 +1100,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Pending Task Approvals
@@ -1116,7 +1126,7 @@ const TeacherDashboard = () => {
                     <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
                       {task.name}
                     </span>
-                    <div style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                    <div style={{ fontSize: "0.875rem", color: "black" }}>
                       Assigned to: {task.assignedTo?.name || "Unassigned"}
                     </div>
                   </div>
@@ -1145,7 +1155,7 @@ const TeacherDashboard = () => {
                   fontSize: "1.25rem",
                   fontWeight: "600",
                   marginBottom: "0.5rem",
-                  color: "#78350f",
+                  color: "black",
                 }}
               >
                 Review Task: {selectedTask.name}
@@ -1195,122 +1205,120 @@ const TeacherDashboard = () => {
         </div>
 
         {/* Student Balances Section */}
-     {/* Student Balances Section */}
-<div
-  style={{
-    backgroundColor: "rgba(255, 255, 255, 0.8)",
-    padding: "1.5rem",
-    borderRadius: "0.5rem",
-    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-    backdropFilter: "blur(10px)",
-  }}
->
-  <h3
-    style={{
-      fontSize: "1.5rem",
-      fontWeight: "600",
-      marginBottom: "1rem",
-      color: "#78350f",
-    }}
-  >
-    Student Balances
-  </h3>
-  <div
-    style={{
-      display: "flex",
-      justifyContent: "space-between",
-      alignItems: "center",
-      marginBottom: "1rem",
-    }}
-  >
-    <h3 style={{ fontSize: "1.5rem", fontWeight: "600", color: "#78350f" }}>
-      Student Balances Report
-    </h3>
-    <button
-      onClick={generateBalancesReport}
-      style={{
-        backgroundColor: "#3b82f6",
-        color: "white",
-        padding: "0.5rem 1rem",
-        borderRadius: "0.5rem",
-        fontWeight: "bold",
-        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-        transition: "all 0.2s",
-        cursor: "pointer",
-      }}
-      onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-      onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-    >
-      📊 Download Balances Report
-    </button>
-  </div>
-  {/* Updated Grid Container with Scrolling */}
-  <div
-    style={{
-      display: "grid",
-      gridTemplateColumns: "repeat(3, 1fr)", // Always 3 columns per row
-      gap: "1rem",
-      maxHeight: "400px", // Adjust this height based on your card dimensions (approx. 2 rows)
-      overflowY: "auto", // Enables vertical scrolling when there are more than 6 students
-    }}
-  >
-    {students.map((student) => (
-      <div
-        key={student._id}
-        style={{
-          backgroundColor: "#fef3c7",
-          padding: "1rem",
-          borderRadius: "0.5rem",
-          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "space-between",
-          border: "2px solid #fbbf24",
-          cursor: "pointer",
-        }}
-        onClick={() => handleStudentClick(student._id)}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontSize: "1.5rem" }}>{student.icon}</span>
-          <div>
-            <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
-              {student.name}
-            </span>
-            <div style={{ fontSize: "0.875rem", color: "#4b5563" }}>
-              Level {student.level}
-            </div>
+        <div
+          style={{
+            backgroundColor: "rgba(255, 255, 255, 0.8)",
+            padding: "1.5rem",
+            borderRadius: "0.5rem",
+            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+            backdropFilter: "blur(10px)",
+            color: "black",
+          }}
+        >
+          <h3
+            style={{
+              fontSize: "1.5rem",
+              fontWeight: "600",
+              marginBottom: "1rem",
+              color: "black",
+            }}
+          >
+            Student Balances
+          </h3>
+          <div
+            style={{
+              display: "flex",
+              justifyContent: "space-between",
+              alignItems: "center",
+              marginBottom: "1rem",
+            }}
+          >
+            <h3 style={{ fontSize: "1.5rem", fontWeight: "600", color: "black" }}>
+              Student Balances Report
+            </h3>
+            <button
+              onClick={generateBalancesReport}
+              style={{
+                backgroundColor: "#3b82f6",
+                color: "white",
+                padding: "0.5rem 1rem",
+                borderRadius: "0.5rem",
+                fontWeight: "bold",
+                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                transition: "all 0.2s",
+                cursor: "pointer",
+              }}
+              onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+              onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+            >
+              📊 Download Balances Report
+            </button>
+          </div>
+          <div
+            style={{
+              display: "grid",
+              gridTemplateColumns: "repeat(3, 1fr)",
+              gap: "1rem",
+              maxHeight: "400px",
+              overflowY: "auto",
+            }}
+          >
+            {students.map((student) => (
+              <div
+                key={student._id}
+                style={{
+                  backgroundColor: "#fef3c7",
+                  padding: "1rem",
+                  borderRadius: "0.5rem",
+                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                  display: "flex",
+                  alignItems: "center",
+                  justifyContent: "space-between",
+                  border: "2px solid #fbbf24",
+                  cursor: "pointer",
+                }}
+                onClick={() => handleStudentClick(student._id)}
+              >
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <span style={{ fontSize: "1.5rem" }}>{student.icon}</span>
+                  <div>
+                    <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
+                      {student.name}
+                    </span>
+                    <div style={{ fontSize: "0.875rem", color: "black" }}>
+                      Level {student.level}
+                    </div>
+                  </div>
+                </div>
+                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+                  <span style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#15803d" }}>
+                    {student.balance} Moolah
+                  </span>
+                  <button
+                    onClick={(e) => {
+                      e.stopPropagation();
+                      deleteStudent(student._id);
+                    }}
+                    style={{
+                      backgroundColor: "#ef4444",
+                      color: "white",
+                      padding: "0.5rem 1rem",
+                      borderRadius: "0.5rem",
+                      fontWeight: "bold",
+                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                      transition: "all 0.2s",
+                      cursor: "pointer",
+                    }}
+                    onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+                    onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+                  >
+                    🗑️ Delete
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
         </div>
-        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#15803d" }}>
-            {student.balance} Moolah
-          </span>
-          <button
-            onClick={(e) => {
-              e.stopPropagation();
-              deleteStudent(student._id);
-            }}
-            style={{
-              backgroundColor: "#ef4444",
-              color: "white",
-              padding: "0.5rem 1rem",
-              borderRadius: "0.5rem",
-              fontWeight: "bold",
-              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-              transition: "all 0.2s",
-              cursor: "pointer",
-            }}
-            onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-            onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-          >
-            🗑️ Delete
-          </button>
-        </div>
-      </div>
-    ))}
-  </div>
-</div>
-
 
         {/* Student Details Modal */}
         {selectedStudent && studentDetails && (
@@ -1344,13 +1352,13 @@ const TeacherDashboard = () => {
                   fontSize: "1.5rem",
                   fontWeight: "600",
                   marginBottom: "1rem",
-                  color: "#78350f",
+                  color: "black",
                 }}
               >
                 Student Details: {studentDetails.name}
               </h3>
               <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "black" }}>
                   Balance
                 </h4>
                 <p style={{ fontSize: "1.125rem", color: "#15803d" }}>
@@ -1358,7 +1366,7 @@ const TeacherDashboard = () => {
                 </p>
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "black" }}>
                   Cow Icon
                 </h4>
                 {studentDetails.cowIcon ? (
@@ -1372,7 +1380,7 @@ const TeacherDashboard = () => {
                 )}
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "black" }}>
                   Transactions
                 </h4>
                 <div
@@ -1395,7 +1403,7 @@ const TeacherDashboard = () => {
                       <p style={{ fontSize: "1rem", fontWeight: "600" }}>
                         {transaction.type}: {transaction.amount} Moolah
                       </p>
-                      <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                      <p style={{ fontSize: "0.875rem", color: "black" }}>
                         {transaction.description}
                       </p>
                     </div>
@@ -1403,7 +1411,7 @@ const TeacherDashboard = () => {
                 </div>
               </div>
               <div style={{ marginBottom: "1rem" }}>
-                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "#78350f" }}>
+                <h4 style={{ fontSize: "1.25rem", fontWeight: "600", color: "black" }}>
                   Tasks
                 </h4>
                 <div
@@ -1424,10 +1432,10 @@ const TeacherDashboard = () => {
                       }}
                     >
                       <p style={{ fontSize: "1rem", fontWeight: "600" }}>{task.name}</p>
-                      <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                      <p style={{ fontSize: "0.875rem", color: "black" }}>
                         Reward: {task.reward} Moolah
                       </p>
-                      <p style={{ fontSize: "0.875rem", color: "#4b5563" }}>
+                      <p style={{ fontSize: "0.875rem", color: "black" }}>
                         Status: {task.status}
                       </p>
                     </div>
@@ -1459,6 +1467,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -1466,7 +1475,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Level Configuration
@@ -1484,6 +1493,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 width: "100px",
                 backgroundColor: "#fef3c7",
+                color: "black",
               }}
             />
             <input
@@ -1498,6 +1508,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 width: "150px",
                 backgroundColor: "#fef3c7",
+                color: "black",
               }}
             />
             <input
@@ -1512,6 +1523,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 width: "150px",
                 backgroundColor: "#fef3c7",
+                color: "black",
               }}
             />
             <input
@@ -1526,6 +1538,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color: "black",
               }}
             />
             <button
@@ -1552,7 +1565,7 @@ const TeacherDashboard = () => {
                 fontSize: "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
-                color: "#78350f",
+                color: "black",
               }}
             >
               Current Level Configurations
@@ -1612,6 +1625,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -1619,7 +1633,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Marketplace
@@ -1644,6 +1658,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   flex: "1",
                   backgroundColor: "#fef3c7",
+                  color: "black",
                 }}
                 required
               />
@@ -1657,6 +1672,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   width: "8rem",
                   backgroundColor: "#fef3c7",
+                  color: "black",
                 }}
                 required
               />
@@ -1685,7 +1701,7 @@ const TeacherDashboard = () => {
                 fontSize: "1.25rem",
                 fontWeight: "600",
                 marginBottom: "0.5rem",
-                color: "#78350f",
+                color: "black",
               }}
             >
               Current Marketplace Items
@@ -1750,6 +1766,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -1757,7 +1774,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Apply Fine
@@ -1771,6 +1788,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
+                color: "black",
               }}
             >
               {students.map((student) => (
@@ -1789,6 +1807,7 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 width: "8rem",
                 backgroundColor: "#fef3c7",
+                color: "black",
               }}
             />
             <button
@@ -1823,6 +1842,7 @@ const TeacherDashboard = () => {
             borderRadius: "0.5rem",
             boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
             backdropFilter: "blur(10px)",
+            color: "black",
           }}
         >
           <h3
@@ -1830,7 +1850,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#78350f",
+              color: "black",
             }}
           >
             Manage Seasons
