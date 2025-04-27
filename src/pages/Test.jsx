@@ -1,13 +1,14 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useContext } from 'react';
 import { Link } from 'react-router-dom';
 import axios from 'axios';
+import { BackgroundImageContext } from '../App';
 
 const SeasonImageManager = () => {
   const [selectedFile, setSelectedFile] = useState(null);
   const [uploadStatus, setUploadStatus] = useState('');
   const [images, setImages] = useState([]);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  const [backgroundImage, setBackgroundImage] = useState('');
+  const { setBackgroundImage } = useContext(BackgroundImageContext);
 
   // Handle file selection from the upload input
   const handleFileChange = (e) => {
@@ -23,7 +24,7 @@ const SeasonImageManager = () => {
     const formData = new FormData();
     formData.append('seasonImage', selectedFile);
     try {
-        const response = await axios.post('https://moolandia-mern-app.onrender.com/api/season-images', formData, {
+      const response = await axios.post('https://moolandia-mern-app.onrender.com/api/season-images', formData, {
         headers: { 'Content-Type': 'multipart/form-data' },
       });
       if (response.data.success) {
@@ -42,7 +43,7 @@ const SeasonImageManager = () => {
   // Fetch the list of images from the backend
   const fetchImages = async () => {
     try {
-        const response = await axios.get('https://moolandia-mern-app.onrender.com/api/season-images');
+      const response = await axios.get('https://moolandia-mern-app.onrender.com/api/season-images');
       if (response.data.success) {
         setImages(response.data.images);
       }
@@ -58,19 +59,22 @@ const SeasonImageManager = () => {
 
   // Handle background image selection from the modal
   const handleSelectBackground = async (imgPath) => {
-    setBackgroundImage(imgPath);
-    // Persist the background image in localStorage for all pages
-    localStorage.setItem('backgroundImage', imgPath);
-    // Set the background of the page (document body)
-    document.body.style.backgroundImage = `url(https://moolandia-mern-app.onrender.com${imgPath})`;
+    const fullImageUrl = `https://moolandia-mern-app.onrender.com${imgPath}`;
+    
+    // Update the background image in the context
+    setBackgroundImage(fullImageUrl);
+    
+    // Update the document body background
+    document.body.style.backgroundImage = `url(${fullImageUrl})`;
     document.body.style.backgroundSize = 'cover';
     document.body.style.backgroundRepeat = 'no-repeat';
+    
     // Close the modal once an image is selected
     setIsModalOpen(false);
 
     // Update the backend to mark this image as the background
     try {
-      const response = await axios.patch('/api/season-images/set-background', { imagePath: imgPath });
+      const response = await axios.patch('https://moolandia-mern-app.onrender.com/api/season-images/set-background', { imagePath: imgPath });
       console.log(response.data.message);
     } catch (error) {
       console.error('Error updating background in backend:', error);
@@ -81,7 +85,7 @@ const SeasonImageManager = () => {
   const handleDeleteImage = async (id) => {
     if (!window.confirm('Are you sure you want to delete this image?')) return;
     try {
-        const response = await axios.delete(`https://moolandia-mern-app.onrender.com/api/season-images/${id}`);
+      const response = await axios.delete(`https://moolandia-mern-app.onrender.com/api/season-images/${id}`);
       if (response.data.success) {
         fetchImages(); // Refresh the image list after deletion
       } else {
@@ -103,7 +107,6 @@ const SeasonImageManager = () => {
           padding: 20px;
           max-width: 800px;
           margin-left: 700px;
-          
           box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
         }
         .back-button {
@@ -210,17 +213,6 @@ const SeasonImageManager = () => {
         <div className="modal-button-section">
           <button onClick={() => setIsModalOpen(true)}>Select Background Image</button>
         </div>
-
-        {/* Display Current Background Preview */}
-        {backgroundImage && (
-          <div className="background-preview">
-            <h3>Current Background Preview:</h3>
-            <img
-              src={`https://moolandia-mern-app.onrender.com${backgroundImage}`}
-              alt="Current Background"
-            />
-          </div>
-        )}
 
         {/* Modal to Display Existing Images */}
         {isModalOpen && (
