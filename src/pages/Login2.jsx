@@ -138,7 +138,7 @@ function Login({ setIsAuthenticated }) {
           justifyContent: "center"
         }}
       >
-        <img src={logo} alt="Game Logo" style={{ width: "60px", maxWidth: "20vw" }} />
+        <img src={logo} alt="Game Logo" style={{ width: "90px", maxWidth: "80%" }} />
       </motion.div>
 
       {/* Role Selection or Login Form */}
@@ -199,9 +199,9 @@ function Login({ setIsAuthenticated }) {
           style={{
             boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
             width: "100%",
-            maxWidth: 400,
+            maxWidth: 300,
             margin: "0 auto",
-            padding: "2rem 1rem"
+            padding: "1.5rem 1rem"
           }}
         >
           {/* Optional Glowing Effect */}
