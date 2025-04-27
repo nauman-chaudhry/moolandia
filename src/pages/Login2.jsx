@@ -4,6 +4,7 @@ import { motion } from "framer-motion";
 import { Howl } from "howler";
 import axios from "axios";
 import logo from "./LogoColor.png";
+import coinImage from "./coin.png";
 
 function Login() {
   const navigate = useNavigate();
@@ -12,6 +13,18 @@ function Login() {
   const [password, setPassword] = useState(""); // Track password input
   const [error, setError] = useState(""); // Track login errors
   const [bg, setBg] = useState(null); // State to hold the background image URL
+  const [isMobile, setIsMobile] = useState(false);
+
+  // Mobile detection
+  useEffect(() => {
+    const checkMobile = () => {
+      setIsMobile(window.matchMedia("(max-width: 768px)").matches);
+    };
+    
+    checkMobile();
+    window.addEventListener('resize', checkMobile);
+    return () => window.removeEventListener('resize', checkMobile);
+  }, []);
 
   // Sound effects
   const [buttonClickSound] = useState(
@@ -122,6 +135,7 @@ function Login() {
         minHeight: "100vh",
         height: "100vh",
         width: "100vw",
+        padding: isMobile ? "1rem" : "0",
       }}
     >
       {/* Logo */}
@@ -130,9 +144,22 @@ function Login() {
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
         className="mb-8"
-        style={{ paddingLeft: "250px", paddingTop: "150px" }}
+        style={{ 
+          width: "100%",
+          display: "flex",
+          justifyContent: "center",
+          padding: isMobile ? "2rem 0" : "4rem 0",
+        }}
       >
-        <img src={logo} alt="Game Logo" className="w-30 ml-4" />
+        <img 
+          src={isMobile ? coinImage : logo}
+          alt="Game Logo" 
+          style={{ 
+            width: isMobile ? "80px" : "auto",
+            maxWidth: isMobile ? "80px" : "300px",
+            height: "auto",
+          }}
+        />
       </motion.div>
 
       {/* Role Selection or Login Form */}
@@ -143,13 +170,20 @@ function Login() {
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
           className="flex flex-col items-center gap-6"
-          style={{ paddingLeft: "710px"  }}
+          style={{ 
+            width: isMobile ? "100%" : "auto",
+            padding: isMobile ? "0 1rem" : "0",
+          }}
         >
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => handleRoleSelection("teacher")}
-            className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4"
+            className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
+            style={{ 
+              width: isMobile ? "100%" : "auto",
+              maxWidth: "300px",
+            }}
           >
             🧑‍🏫 Teacher
           </motion.button>
@@ -157,8 +191,11 @@ function Login() {
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => handleRoleSelection("student")}
-            className="game-button bg-green-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative ml-4 "
-            style={{ marginLeft: "50px" }}
+            className="game-button bg-green-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
+            style={{ 
+              width: isMobile ? "100%" : "auto",
+              maxWidth: "300px",
+            }}
           >
             👩‍🎓 Student
           </motion.button>
@@ -171,7 +208,9 @@ function Login() {
           transition={{ duration: 1 }}
           className="bg-transparent p-8 rounded-3xl shadow-lg border-2 border-yellow-400 relative"
           style={{
-            boxShadow: "0 0 20px rgba(255, 223, 0, 0.5)",
+            width: isMobile ? "90%" : "400px",
+            maxWidth: "400px",
+            margin: "0 auto",
           }}
         >
           {/* Optional Glowing Effect */}
@@ -189,6 +228,7 @@ function Login() {
             style={{
               textShadow: "0 0 10px rgba(255, 223, 0, 0.8)",
               fontFamily: "'Cinzel', serif",
+              fontSize: isMobile ? "1.8rem" : "2rem",
             }}
           >
             {role === "teacher" ? "Teacher Login" : "Student Login"}
@@ -201,11 +241,10 @@ function Login() {
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 "
+                className="w-full p-4 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
                 style={{
                   boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginTop:"10px"
+                  fontSize: isMobile ? "1rem" : "1.2rem",
                 }}
                 required
               />
@@ -218,11 +257,10 @@ function Login() {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full p-6 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 "
+                className="w-full p-4 rounded-full bg-black/50 text-white placeholder-gray-400 border-2 border-yellow-400 focus:outline-none focus:border-yellow-500"
                 style={{
                   boxShadow: "0 0 10px rgba(255, 223, 0, 0.5)",
-                  fontSize: "1.5rem",
-                  marginTop:"10px"
+                  fontSize: isMobile ? "1rem" : "1.2rem",
                 }}
                 required
               />
@@ -234,10 +272,9 @@ function Login() {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="text-red-500 text-sm text-center "
+                className="text-red-500 text-sm text-center"
                 style={{
                   textShadow: "0 0 5px rgba(255, 0, 0, 0.8)",
-                  marginTop:"10px"
                 }}
               >
                 {error}
@@ -249,25 +286,25 @@ function Login() {
               whileHover={{ scale: 1.1 }}
               whileTap={{ scale: 0.9 }}
               type="submit"
-              className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative "
+              className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
               style={{
                 boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
-                marginTop:"10px"
+                width: "100%",
+                fontSize: isMobile ? "1rem" : "1.2rem",
               }}
             >
               Login
             </motion.button>
           </form>
 
-          {/* Back Button */}
           <motion.button
             whileHover={{ scale: 1.1 }}
             whileTap={{ scale: 0.9 }}
             onClick={() => setRole(null)}
-            className="mt-4 text-sm text-yellow-400 hover:text-yellow-300 text-center w-full "
+            className="mt-4 text-sm text-yellow-400 hover:text-yellow-300 text-center w-full"
             style={{
               textShadow: "0 0 5px rgba(255, 223, 0, 0.8)",
-              marginTop:"10px"
+              fontSize: isMobile ? "0.9rem" : "1rem",
             }}
           >
             ← Back to Role Selection
