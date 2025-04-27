@@ -1,10 +1,10 @@
-import React, { useState, useEffect, useRef } from "react";
-// Remove the static import for backgroundImage
-// import backgroundImage from "./pic.jpeg";
+import React, { useState, useEffect, useRef, useContext } from "react";
 import { Howl } from "howler";
 import { useNavigate } from "react-router-dom";
+import { BackgroundImageContext } from "../App";
 
 const TeacherDashboard = () => {
+  const { backgroundImage } = useContext(BackgroundImageContext);
   const [bg, setBg] = useState(null); // State to hold the fetched background image URL
   const [tasks, setTasks] = useState([]);
   const [students, setStudents] = useState([]);
@@ -503,7 +503,7 @@ const TeacherDashboard = () => {
         width: "100vw",
         maxWidth: "100vw",
         minHeight: "100vh",
-        backgroundImage: bg ? `url(${bg})` : "none",
+        backgroundImage: backgroundImage ? `url(${backgroundImage})` : "none",
         backgroundSize: "cover",
         backgroundPosition: "center",
         backgroundRepeat: "no-repeat",
