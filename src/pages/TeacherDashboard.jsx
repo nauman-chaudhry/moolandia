@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef } from "react";
 // Remove the static import for backgroundImage
 // import backgroundImage from "./pic.jpeg";
 import { Howl } from "howler";
+import { useNavigate } from "react-router-dom";
 
 const TeacherDashboard = () => {
   const [bg, setBg] = useState(null); // State to hold the fetched background image URL
@@ -37,6 +38,8 @@ const TeacherDashboard = () => {
       volume: 0.5,
     })
   );
+
+  const navigate = useNavigate();
 
   // Fetch level configurations
   useEffect(() => {
@@ -1212,121 +1215,121 @@ const TeacherDashboard = () => {
           )}
         </div>
 
-        {/* Student Balances Section */}
-        <div
-          style={{
-            backgroundColor: "rgba(255, 255, 255, 0.8)",
-            padding: "1.5rem",
-            borderRadius: "0.5rem",
-            boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-            backdropFilter: "blur(10px)",
+     {/* Student Balances Section */}
+<div
+  style={{
+    backgroundColor: "rgba(255, 255, 255, 0.8)",
+    padding: "1.5rem",
+    borderRadius: "0.5rem",
+    boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+    backdropFilter: "blur(10px)",
             color: "black",
-          }}
-        >
-          <h3
-            style={{
-              fontSize: "1.5rem",
-              fontWeight: "600",
-              marginBottom: "1rem",
+  }}
+>
+  <h3
+    style={{
+      fontSize: "1.5rem",
+      fontWeight: "600",
+      marginBottom: "1rem",
               color: "black",
-            }}
-          >
-            Student Balances
-          </h3>
-          <div
-            style={{
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              marginBottom: "1rem",
-            }}
-          >
+    }}
+  >
+    Student Balances
+  </h3>
+  <div
+    style={{
+      display: "flex",
+      justifyContent: "space-between",
+      alignItems: "center",
+      marginBottom: "1rem",
+    }}
+  >
             <h3 style={{ fontSize: "1.5rem", fontWeight: "600", color: "black" }}>
-              Student Balances Report
-            </h3>
-            <button
-              onClick={generateBalancesReport}
-              style={{
-                backgroundColor: "#3b82f6",
-                color: "white",
-                padding: "0.5rem 1rem",
-                borderRadius: "0.5rem",
-                fontWeight: "bold",
-                boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                transition: "all 0.2s",
-                cursor: "pointer",
-              }}
-              onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-              onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-            >
-              📊 Download Balances Report
-            </button>
-          </div>
-          <div
-            style={{
-              display: "grid",
+      Student Balances Report
+    </h3>
+    <button
+      onClick={generateBalancesReport}
+      style={{
+        backgroundColor: "#3b82f6",
+        color: "white",
+        padding: "0.5rem 1rem",
+        borderRadius: "0.5rem",
+        fontWeight: "bold",
+        boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+        transition: "all 0.2s",
+        cursor: "pointer",
+      }}
+      onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+      onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+    >
+      📊 Download Balances Report
+    </button>
+  </div>
+  <div
+    style={{
+      display: "grid",
               gridTemplateColumns: "repeat(3, 1fr)",
-              gap: "1rem",
+      gap: "1rem",
               maxHeight: "400px",
               overflowY: "auto",
-            }}
-          >
-            {students.map((student) => (
-              <div
-                key={student._id}
-                style={{
-                  backgroundColor: "#fef3c7",
-                  padding: "1rem",
-                  borderRadius: "0.5rem",
-                  boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                  display: "flex",
-                  alignItems: "center",
-                  justifyContent: "space-between",
-                  border: "2px solid #fbbf24",
-                  cursor: "pointer",
-                }}
-                onClick={() => handleStudentClick(student._id)}
-              >
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <span style={{ fontSize: "1.5rem" }}>{student.icon}</span>
-                  <div>
-                    <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
-                      {student.name}
-                    </span>
+    }}
+  >
+    {students.map((student) => (
+      <div
+        key={student._id}
+        style={{
+          backgroundColor: "#fef3c7",
+          padding: "1rem",
+          borderRadius: "0.5rem",
+          boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "space-between",
+          border: "2px solid #fbbf24",
+          cursor: "pointer",
+        }}
+        onClick={() => handleStudentClick(student._id)}
+      >
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <span style={{ fontSize: "1.5rem" }}>{student.icon}</span>
+          <div>
+            <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
+              {student.name}
+            </span>
                     <div style={{ fontSize: "0.875rem", color: "black" }}>
-                      Level {student.level}
-                    </div>
-                  </div>
-                </div>
-                <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-                  <span style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#15803d" }}>
-                    {student.balance} Moolah
-                  </span>
-                  <button
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      deleteStudent(student._id);
-                    }}
-                    style={{
-                      backgroundColor: "#ef4444",
-                      color: "white",
-                      padding: "0.5rem 1rem",
-                      borderRadius: "0.5rem",
-                      fontWeight: "bold",
-                      boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
-                      transition: "all 0.2s",
-                      cursor: "pointer",
-                    }}
-                    onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
-                    onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
-                  >
-                    🗑️ Delete
-                  </button>
-                </div>
-              </div>
-            ))}
+              Level {student.level}
+            </div>
           </div>
         </div>
+        <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
+          <span style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#15803d" }}>
+            {student.balance} Moolah
+          </span>
+          <button
+            onClick={(e) => {
+              e.stopPropagation();
+              deleteStudent(student._id);
+            }}
+            style={{
+              backgroundColor: "#ef4444",
+              color: "white",
+              padding: "0.5rem 1rem",
+              borderRadius: "0.5rem",
+              fontWeight: "bold",
+              boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+              transition: "all 0.2s",
+              cursor: "pointer",
+            }}
+            onMouseOver={(e) => (e.target.style.transform = "scale(1.05)")}
+            onMouseOut={(e) => (e.target.style.transform = "scale(1)")}
+          >
+            🗑️ Delete
+          </button>
+        </div>
+      </div>
+    ))}
+  </div>
+</div>
 
         {/* Student Details Modal */}
         {selectedStudent && studentDetails && (
@@ -1864,10 +1867,7 @@ const TeacherDashboard = () => {
             Manage Seasons
           </h3>
           <button
-            onClick={() => {
-              // Navigate to the /seasonselector route
-              window.location.href = "/seasonselector";
-            }}
+            onClick={() => navigate("/seasonselector")}
             style={{
               backgroundColor: "#3b82f6",
               color: "white",
