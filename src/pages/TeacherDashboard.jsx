@@ -804,7 +804,7 @@ const TeacherDashboard = () => {
           </div>
         </div>
 
-        {/* Class Assigning Section */}
+       {/* Class Assigning Section */}
         <div
           style={{
             backgroundColor: "rgba(255, 255, 255, 0.8)",
@@ -819,7 +819,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#000000",
+              color: "#000000", // Black text
             }}
           >
             Assign Students to Class
@@ -833,12 +833,12 @@ const TeacherDashboard = () => {
                 borderRadius: "0.5rem",
                 flex: "1",
                 backgroundColor: "#fef3c7",
-                color:"#000000",
+                color: "#000000", // Black text
               }}
             >
               <option value="">Select a Class</option>
               {classes.map((cls) => (
-                <option key={cls._id} value={cls._id}>
+                <option key={cls._id} value={cls._id} style={{ color: "#000000" }}> {/* Black text */}
                   {cls.name}
                 </option>
               ))}
@@ -852,10 +852,15 @@ const TeacherDashboard = () => {
                 flex: "1",
                 backgroundColor: "#fef3c7",
                 height: "150px",
+                color: "#000000", // Black text
               }}
             >
               {students.map((student) => (
-                <option key={student._id} value={student._id}>
+                <option 
+                  key={student._id} 
+                  value={student._id}
+                  style={{ color: "#000000" }} // Black text
+                >
                   {student.name} (Level {student.level})
                 </option>
               ))}
@@ -890,7 +895,7 @@ const TeacherDashboard = () => {
               🚀 Assign to Class
             </button>
           </div>
-          <p style={{ fontSize: "0.875rem", color: "#4b5563", marginTop: "0.5rem" }}>
+          <p style={{ fontSize: "0.875rem", color: "#000000", marginTop: "0.5rem" }}> {/* Black text */}
             Hold <strong>Ctrl</strong> (Windows/Linux) or <strong>Cmd</strong> (Mac) to select multiple students.
           </p>
         </div>
@@ -910,7 +915,7 @@ const TeacherDashboard = () => {
               fontSize: "1.5rem",
               fontWeight: "600",
               marginBottom: "1rem",
-              color: "#000000",
+              color: "#000000", // Black text
             }}
           >
             Create Task
@@ -935,7 +940,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   flex: "1",
                   backgroundColor: "#fef3c7",
-                  color:"#000000",
+                  color: "#000000", // Black text
                 }}
                 required
               />
@@ -949,7 +954,7 @@ const TeacherDashboard = () => {
                   borderRadius: "0.5rem",
                   width: "8rem",
                   backgroundColor: "#fef3c7",
-                  color:"#000000",
+                  color: "#000000", // Black text
                 }}
                 required
               />
@@ -973,7 +978,7 @@ const TeacherDashboard = () => {
             </div>
           </form>
         </div>
-
+        
         {/* Task Assignment Section */}
         <div
           style={{
