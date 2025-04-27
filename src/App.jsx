@@ -32,25 +32,10 @@ function App() {
           headers: { Authorization: `Bearer ${token}` }
         });
 
-        if (response.data.isAuthenticated) {
-          setIsAuthenticated(true);
-          // Store user info in localStorage
-          localStorage.setItem("userType", response.data.user.role);
-          localStorage.setItem("userId", response.data.user.userId);
-        } else {
-          setIsAuthenticated(false);
-          // Clear invalid token
-          localStorage.removeItem("token");
-          localStorage.removeItem("userType");
-          localStorage.removeItem("userId");
-        }
+        setIsAuthenticated(response.data.isAuthenticated);
       } catch (error) {
         console.error("Auth check error:", error);
         setIsAuthenticated(false);
-        // Clear invalid token
-        localStorage.removeItem("token");
-        localStorage.removeItem("userType");
-        localStorage.removeItem("userId");
       } finally {
         setIsLoading(false);
       }
