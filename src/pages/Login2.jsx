@@ -89,10 +89,10 @@ function Login() {
 
     try {
       // Send login request to the backend
-        const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
+      const response = await fetch("https://moolandia-mern-app.onrender.com/api/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ username, password }),
+        body: JSON.stringify({ username, password, role }), // Added role to the request
       });
 
       const data = await response.json();
@@ -102,12 +102,18 @@ function Login() {
         if (data.role === role) {
           successSound.play(); // Play success sound
 
+          // Store the authentication data
+          localStorage.setItem('token', data.token);
+          localStorage.setItem('role', data.role);
+          if (data.studentId) {
+            localStorage.setItem('studentId', data.studentId);
+          }
+
           // Navigate to the appropriate dashboard
           if (role === "teacher") {
             navigate("/teacher-dashboard");
           } else if (role === "student") {
-            const studentId = data.studentId; // Use the studentId returned from the backend
-            navigate(`/student/${studentId}/dashboard`); // Navigate to the student dashboard with the studentId
+            navigate(`/student/${data.studentId}/dashboard`);
           }
         } else {
           setError("Invalid role for this user.");
@@ -118,6 +124,7 @@ function Login() {
         errorSound.play(); // Play error sound
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("An error occurred. Please try again.");
       errorSound.play(); // Play error sound
     }
