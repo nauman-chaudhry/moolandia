@@ -533,7 +533,6 @@ const TeacherDashboard = () => {
       <div
         style={{
           width: "100%",
-          maxWidth: "1200px",
           margin: "0 auto",
           flex: "1",
           display: "flex",
