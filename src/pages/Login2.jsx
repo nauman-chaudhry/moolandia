@@ -12,12 +12,15 @@ const Login2 = ({ setIsAuthenticated }) => {
   const navigate = useNavigate();
   const [role, setRole] = useState(null);
   const [bg, setBg] = useState(null);
+  const [isMobile, setIsMobile] = useState(false);
   const [isTablet, setIsTablet] = useState(false);
 
   // Check device size
   useEffect(() => {
     const checkDeviceSize = () => {
-      setIsTablet(window.innerWidth >= 768 && window.innerWidth <= 1024);
+      const width = window.innerWidth;
+      setIsMobile(width < 768);
+      setIsTablet(width >= 768 && width <= 1024);
     };
     
     checkDeviceSize();
@@ -109,7 +112,7 @@ const Login2 = ({ setIsAuthenticated }) => {
 
   return (
     <div
-      className="h-screen w-screen flex flex-col items-center justify-start pt-2 pb-4 px-3 overflow-hidden"
+      className="min-h-screen w-full flex flex-col items-center justify-center p-4 sm:p-6 md:p-8"
       style={{
         backgroundImage: bg ? `url(${bg})` : "none",
         backgroundSize: "cover",
@@ -123,8 +126,8 @@ const Login2 = ({ setIsAuthenticated }) => {
         initial={{ opacity: 0, y: -50 }}
         animate={{ opacity: 1, y: 0 }}
         transition={{ duration: 1 }}
-        className={`mb-1 sm:mb-2 w-full ${
-          isTablet ? "max-w-[120px]" : "max-w-[100px] sm:max-w-[150px]"
+        className={`mb-4 sm:mb-6 md:mb-8 ${
+          isMobile ? "w-20" : isTablet ? "w-24" : "w-32"
         }`}
       >
         <img src={logo} alt="Game Logo" className="w-full" />
@@ -136,17 +139,17 @@ const Login2 = ({ setIsAuthenticated }) => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="w-full max-w-[280px] sm:max-w-[320px] bg-white/10 backdrop-blur-md rounded-2xl p-2 sm:p-3 md:p-4 shadow-lg"
+          className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 md:p-6 shadow-lg"
         >
-          <h2 className="text-base sm:text-lg md:text-xl font-bold text-center text-white mb-2 sm:mb-3 md:mb-4">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center text-white mb-4 sm:mb-5 md:mb-6">
             Select Your Role
           </h2>
-          <div className="flex flex-col sm:flex-row gap-1.5 sm:gap-2 md:gap-3 justify-center">
+          <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 md:gap-5 justify-center">
             <motion.button
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleRoleSelection("teacher")}
-              className="w-full sm:w-auto px-2.5 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2.5 bg-yellow-500 text-white text-xs sm:text-sm md:text-base font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
+              className="w-full sm:w-auto px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 bg-yellow-500 text-white text-sm sm:text-base md:text-lg font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
             >
               🧑‍🏫 Teacher
             </motion.button>
@@ -154,7 +157,7 @@ const Login2 = ({ setIsAuthenticated }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => handleRoleSelection("student")}
-              className="w-full sm:w-auto px-2.5 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2.5 bg-green-500 text-white text-xs sm:text-sm md:text-base font-bold rounded-full shadow-lg hover:bg-green-600 transition-colors"
+              className="w-full sm:w-auto px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 bg-green-500 text-white text-sm sm:text-base md:text-lg font-bold rounded-full shadow-lg hover:bg-green-600 transition-colors"
             >
               👩‍🎓 Student
             </motion.button>
@@ -166,19 +169,19 @@ const Login2 = ({ setIsAuthenticated }) => {
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 1 }}
-          className="w-full max-w-[280px] sm:max-w-[320px] bg-white/10 backdrop-blur-md rounded-2xl p-2 sm:p-3 md:p-4 shadow-lg"
+          className="w-full max-w-[280px] sm:max-w-[320px] md:max-w-[360px] bg-white/10 backdrop-blur-md rounded-2xl p-4 sm:p-5 md:p-6 shadow-lg"
         >
-          <h2 className="text-base sm:text-lg md:text-xl font-bold text-center text-white mb-2 sm:mb-3 md:mb-4">
+          <h2 className="text-lg sm:text-xl md:text-2xl font-bold text-center text-white mb-4 sm:mb-5 md:mb-6">
             {role === "teacher" ? "Teacher Login" : "Student Login"}
           </h2>
-          <form onSubmit={handleSubmit} className="space-y-1.5 sm:space-y-2 md:space-y-3">
+          <form onSubmit={handleSubmit} className="space-y-4 sm:space-y-5 md:space-y-6">
             <div>
               <input
                 type="text"
                 placeholder="Username"
                 value={username}
                 onChange={(e) => setUsername(e.target.value)}
-                className="w-full px-2.5 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2.5 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-xs sm:text-sm"
+                className="w-full px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-sm sm:text-base"
                 required
               />
             </div>
@@ -188,7 +191,7 @@ const Login2 = ({ setIsAuthenticated }) => {
                 placeholder="Password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
-                className="w-full px-2.5 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2.5 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-xs sm:text-sm"
+                className="w-full px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 bg-black/50 text-white placeholder-gray-300 rounded-full border-2 border-yellow-400 focus:outline-none focus:border-yellow-500 text-sm sm:text-base"
                 required
               />
             </div>
@@ -198,7 +201,7 @@ const Login2 = ({ setIsAuthenticated }) => {
                 initial={{ opacity: 0 }}
                 animate={{ opacity: 1 }}
                 transition={{ duration: 0.5 }}
-                className="text-red-400 text-center text-[10px] sm:text-xs"
+                className="text-red-400 text-center text-sm sm:text-base"
               >
                 {error}
               </motion.p>
@@ -208,7 +211,7 @@ const Login2 = ({ setIsAuthenticated }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               type="submit"
-              className="w-full px-2.5 py-1.5 sm:px-3 sm:py-2 md:px-4 md:py-2.5 bg-yellow-500 text-white text-xs sm:text-sm md:text-base font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
+              className="w-full px-4 py-2 sm:px-5 sm:py-3 md:px-6 md:py-4 bg-yellow-500 text-white text-sm sm:text-base md:text-lg font-bold rounded-full shadow-lg hover:bg-yellow-600 transition-colors"
             >
               Login
             </motion.button>
@@ -217,7 +220,7 @@ const Login2 = ({ setIsAuthenticated }) => {
               whileHover={{ scale: 1.05 }}
               whileTap={{ scale: 0.95 }}
               onClick={() => setRole(null)}
-              className="w-full px-2 py-1 text-yellow-400 hover:text-yellow-300 text-center text-[10px] sm:text-xs"
+              className="w-full text-yellow-400 hover:text-yellow-300 text-center text-sm sm:text-base"
             >
               ← Back to Role Selection
             </motion.button>
