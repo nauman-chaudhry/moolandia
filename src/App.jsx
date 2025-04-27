@@ -75,7 +75,16 @@ function App() {
     <Router>
       <Routes>
         {/* Public routes */}
-        <Route path="/" element={isMobile ? <Login2 /> : <Login />} />
+        <Route 
+          path="/" 
+          element={
+            isMobile ? (
+              <Login2 setIsAuthenticated={setIsAuthenticated} />
+            ) : (
+              <Login setIsAuthenticated={setIsAuthenticated} />
+            )
+          } 
+        />
         
         {/* Protected routes */}
         <Route 
