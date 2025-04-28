@@ -324,7 +324,9 @@ function Login({ setIsAuthenticated }) {
                 className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
                 style={{
                   boxShadow: "0 0 20px rgba(255, 223, 0, 0.8)",
-                  width: "100%",
+                  width: isMobile ? "100%" : "80%",
+                  maxWidth: "300px",
+                  margin: "0 auto",
                   fontSize: isMobile ? "1rem" : "1.2rem",
                   opacity: isLoading ? 0.7 : 1,
                   cursor: isLoading ? "not-allowed" : "pointer",
