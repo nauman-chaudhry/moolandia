@@ -167,16 +167,17 @@ function Login({ setIsAuthenticated }) {
           width: "100%",
           display: "flex",
           justifyContent: "center",
-          padding: isMobile ? "2rem 0" : "4rem 0",
+          padding: isMobile ? "1rem 0" : "2rem 0",
         }}
       >
         <img 
-          src={isMobile ? coinImage : logo}
+          src={logo}
           alt="Game Logo" 
           style={{ 
-            width: isMobile ? "80px" : "auto",
-            maxWidth: isMobile ? "80px" : "300px",
+            width: isMobile ? "200px" : "300px",
+            maxWidth: "100%",
             height: "auto",
+            objectFit: "contain",
           }}
         />
       </motion.div>
@@ -190,8 +191,9 @@ function Login({ setIsAuthenticated }) {
           transition={{ duration: 1 }}
           className="flex flex-col items-center gap-6"
           style={{ 
-            width: isMobile ? "100%" : "auto",
-            padding: isMobile ? "0 1rem" : "0",
+            width: "100%",
+            maxWidth: "400px",
+            padding: "0 1rem",
           }}
         >
           <motion.button
@@ -200,7 +202,7 @@ function Login({ setIsAuthenticated }) {
             onClick={() => handleRoleSelection("teacher")}
             className="game-button bg-yellow-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
             style={{ 
-              width: isMobile ? "100%" : "auto",
+              width: "100%",
               maxWidth: "300px",
             }}
           >
@@ -212,7 +214,7 @@ function Login({ setIsAuthenticated }) {
             onClick={() => handleRoleSelection("student")}
             className="game-button bg-green-500 text-white text-xl font-bold px-10 py-4 rounded-full shadow-lg relative"
             style={{ 
-              width: isMobile ? "100%" : "auto",
+              width: "100%",
               maxWidth: "300px",
             }}
           >
@@ -227,9 +229,10 @@ function Login({ setIsAuthenticated }) {
           transition={{ duration: 1 }}
           className="bg-transparent p-8 rounded-3xl shadow-lg border-2 border-yellow-400 relative"
           style={{
-            width: isMobile ? "90%" : "400px",
+            width: "100%",
             maxWidth: "400px",
             margin: "0 auto",
+            padding: isMobile ? "1.5rem" : "2rem",
           }}
         >
           {/* Optional Glowing Effect */}
