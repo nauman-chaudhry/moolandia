@@ -28,6 +28,7 @@ const TeacherDashboard = () => {
     description: ""
   });
   const [highestBalance, setHighestBalance] = useState(0);
+  const [selectedTaskCategory, setSelectedTaskCategory] = useState("Academic");
 
   // Refs for dropdowns
   const taskDropdownRef = useRef(null);
@@ -259,13 +260,13 @@ const TeacherDashboard = () => {
   };
 
   // Function to create a new task
-  const createTask = async (taskName, reward) => {
+  const createTask = async (taskName, reward, category) => {
     buttonClickSound.play();
     try {
-        const response = await fetch("https://moolandia-mern-app.onrender.com/api/tasks", {
+      const response = await fetch("https://moolandia-mern-app.onrender.com/api/tasks", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: taskName, reward }),
+        body: JSON.stringify({ name: taskName, reward, category }),
       });
 
       const newTask = await response.json();
@@ -970,7 +971,8 @@ const TeacherDashboard = () => {
               e.preventDefault();
               const taskName = e.target.taskName.value;
               const reward = parseInt(e.target.reward.value, 10);
-              createTask(taskName, reward);
+              const category = e.target.category.value;
+              createTask(taskName, reward, category);
               e.target.reset();
             }}
           >
@@ -989,6 +991,21 @@ const TeacherDashboard = () => {
                 }}
                 required
               />
+              <select
+                name="category"
+                style={{
+                  border: "1px solid #e5e7eb",
+                  padding: "0.5rem",
+                  borderRadius: "0.5rem",
+                  backgroundColor: "#fef3c7",
+                  color: "black",
+                }}
+                required
+              >
+                <option value="Academic">Academic</option>
+                <option value="Behavior">Behavior</option>
+                <option value="Community">Community</option>
+              </select>
               <input
                 type="number"
                 name="reward"
@@ -1059,7 +1076,7 @@ const TeacherDashboard = () => {
             >
               {tasks.map((task) => (
                 <option key={task._id} value={task._id}>
-                  {task.name} (+{task.reward} Moolah)
+                  [{task.category}] {task.name} (+{task.reward} Moolah)
                 </option>
               ))}
             </select>
@@ -1165,7 +1182,7 @@ const TeacherDashboard = () => {
                 >
                   <div>
                     <span style={{ fontSize: "1.125rem", fontWeight: "600" }}>
-                      {task.name}
+                      [{task.category}] {task.name}
                     </span>
                     <div style={{ fontSize: "0.875rem", color: "black" }}>
                       Assigned to: {task.assignedTo?.name || "Unassigned"}
