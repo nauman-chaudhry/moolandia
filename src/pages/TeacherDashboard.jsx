@@ -768,7 +768,7 @@ const TeacherDashboard = () => {
                       color: "black",
                     }}
                   >
-                    Students
+                    Students in {selectedClassDetails.name}
                   </h3>
                   <div
                     style={{
@@ -786,14 +786,36 @@ const TeacherDashboard = () => {
                           padding: "1rem",
                           borderRadius: "0.5rem",
                           boxShadow: "0 4px 6px rgba(0, 0, 0, 0.1)",
+                          display: "flex",
+                          justifyContent: "space-between",
+                          alignItems: "center",
                         }}
                       >
-                        <p style={{ fontSize: "1rem", fontWeight: "600", color: "black" }}>
-                          {student.name}
-                        </p>
-                        <p style={{ fontSize: "0.875rem", color: "black" }}>
-                          Level {student.level}
-                        </p>
+                        <div>
+                          <p style={{ fontSize: "1rem", fontWeight: "600", color: "black" }}>
+                            {student.name}
+                          </p>
+                          <p style={{ fontSize: "0.875rem", color: "black" }}>
+                            Level {student.level}
+                          </p>
+                        </div>
+                        <button
+                          onClick={() => {
+                            assignStudentToClass(student._id, null);
+                            // Refresh the class details
+                            fetchStudentsInClass(selectedClassDetails._id);
+                          }}
+                          style={{
+                            backgroundColor: "#ef4444",
+                            color: "white",
+                            padding: "0.5rem 1rem",
+                            borderRadius: "0.5rem",
+                            fontWeight: "bold",
+                            cursor: "pointer",
+                          }}
+                        >
+                          Remove from Class
+                        </button>
                       </div>
                     ))}
                   </div>
