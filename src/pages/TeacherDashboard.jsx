@@ -27,6 +27,7 @@ const TeacherDashboard = () => {
     reward: "",
     description: ""
   });
+  const [highestBalance, setHighestBalance] = useState(0);
 
   // Refs for dropdowns
   const taskDropdownRef = useRef(null);
@@ -111,6 +112,7 @@ const TeacherDashboard = () => {
           const studentsResponse = await fetch("https://moolandia-mern-app.onrender.com/api/students");
         const studentsData = await studentsResponse.json();
         setStudents(studentsData);
+        updateHighestBalance(studentsData);
 
         // Fetch tasks
           const tasksResponse = await fetch("https://moolandia-mern-app.onrender.com/api/tasks");
@@ -492,6 +494,12 @@ const TeacherDashboard = () => {
     };
     fetchBackgroundImage();
   }, []);
+
+  // Add this function to find the highest balance
+  const updateHighestBalance = (studentsList) => {
+    const highest = Math.max(...studentsList.map(student => student.balance));
+    setHighestBalance(highest);
+  };
 
   if (!students || !tasks) {
     return <div>Loading...</div>;
@@ -1324,7 +1332,14 @@ const TeacherDashboard = () => {
           </div>
         </div>
         <div style={{ display: "flex", alignItems: "center", gap: "0.5rem" }}>
-          <span style={{ fontSize: "1.25rem", fontWeight: "bold", color: "#15803d" }}>
+          <span 
+            style={{ 
+              fontSize: "1.25rem", 
+              fontWeight: "bold",
+              color: student.balance < 0 ? "#ef4444" : 
+                     student.balance === highestBalance ? "#15803d" : "#000000"
+            }}
+          >
             {student.balance} Moolah
           </span>
           <button
