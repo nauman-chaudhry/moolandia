@@ -273,8 +273,11 @@ const TeacherDashboard = () => {
     }
 
     try {
-      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/tasks`, newTask);
-      setTasks([...tasks, response.data]);
+      await axios.post(`${process.env.REACT_APP_API_URL}/api/tasks`, newTask);
+      // Fetch the updated tasks list from the backend
+      const tasksResponse = await fetch("https://moolandia-mern-app.onrender.com/api/tasks");
+      const tasksData = await tasksResponse.json();
+      setTasks(tasksData);
       setNewTask({ name: "", reward: "", category: "Academic" });
     } catch (error) {
       console.error("Error creating task:", error);
