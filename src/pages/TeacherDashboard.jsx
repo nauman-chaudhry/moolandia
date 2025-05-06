@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useContext } from "react";
 import { Howl } from "howler";
 import { useNavigate } from "react-router-dom";
 import { BackgroundImageContext } from "../App";
+import axios from "axios";
 
 const TeacherDashboard = () => {
   const { backgroundImage } = useContext(BackgroundImageContext);
@@ -42,6 +43,12 @@ const TeacherDashboard = () => {
   );
 
   const navigate = useNavigate();
+
+  const [newTask, setNewTask] = useState({
+    name: "",
+    reward: "",
+    category: "Academic", // Default category
+  });
 
   // Fetch level configurations
   useEffect(() => {
@@ -259,20 +266,19 @@ const TeacherDashboard = () => {
     }
   };
 
-  // Function to create a new task
-  const createTask = async (taskName, reward, category) => {
-    buttonClickSound.play();
-    try {
-      const response = await fetch("https://moolandia-mern-app.onrender.com/api/tasks", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({ name: taskName, reward, category }),
-      });
+  const handleCreateTask = async () => {
+    if (!newTask.name || !newTask.reward || !newTask.category) {
+      alert("Please fill in all task fields");
+      return;
+    }
 
-      const newTask = await response.json();
-      setTasks([...tasks, newTask]);
-    } catch (err) {
-      console.error("Error creating task:", err);
+    try {
+      const response = await axios.post(`${process.env.REACT_APP_API_URL}/api/tasks`, newTask);
+      setTasks([...tasks, response.data]);
+      setNewTask({ name: "", reward: "", category: "Academic" });
+    } catch (error) {
+      console.error("Error creating task:", error);
+      alert("Failed to create task");
     }
   };
 
@@ -972,7 +978,7 @@ const TeacherDashboard = () => {
               const taskName = e.target.taskName.value;
               const reward = parseInt(e.target.reward.value, 10);
               const category = e.target.category.value;
-              createTask(taskName, reward, category);
+              handleCreateTask(taskName, reward, category);
               e.target.reset();
             }}
           >
@@ -981,6 +987,8 @@ const TeacherDashboard = () => {
                 type="text"
                 name="taskName"
                 placeholder="Task Name"
+                value={newTask.name}
+                onChange={(e) => setNewTask({ ...newTask, name: e.target.value })}
                 style={{
                   border: "1px solid #e5e7eb",
                   padding: "0.5rem",
@@ -993,6 +1001,8 @@ const TeacherDashboard = () => {
               />
               <select
                 name="category"
+                value={newTask.category}
+                onChange={(e) => setNewTask({ ...newTask, category: e.target.value })}
                 style={{
                   border: "1px solid #e5e7eb",
                   padding: "0.5rem",
@@ -1010,6 +1020,8 @@ const TeacherDashboard = () => {
                 type="number"
                 name="reward"
                 placeholder="Reward (Moolah)"
+                value={newTask.reward}
+                onChange={(e) => setNewTask({ ...newTask, reward: e.target.value })}
                 style={{
                   border: "1px solid #e5e7eb",
                   padding: "0.5rem",
