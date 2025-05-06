@@ -7,10 +7,10 @@ const axios = require("axios");
 
 // Create a new task
 router.post("/", async (req, res) => {
-  const { name, reward } = req.body;
+  const { name, reward, category } = req.body;
 
   try {
-    const newTask = new Task({ name, reward });
+    const newTask = new Task({ name, reward, category });
     await newTask.save();
     res.status(201).json(newTask);
   } catch (err) {
@@ -21,14 +21,14 @@ router.post("/", async (req, res) => {
 // Fetch all tasks
 router.get("/", async (req, res) => {
   try {
-    const tasks = await Task.find().populate("assignedTo"); // Populate the assignedTo field with student details
+    const tasks = await Task.find().populate("assignedTo");
     res.json(tasks);
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
 });
 
-// Fetch pending tasks (tasks marked as completed by students but not yet approved by the teacher)
+// Fetch pending tasks
 router.get("/pending", async (req, res) => {
   try {
     const pendingTasks = await Task.find({ status: "pending" }).populate("assignedTo");
@@ -38,10 +38,9 @@ router.get("/pending", async (req, res) => {
   }
 });
 
-// Assign a task to a student
 // Assign a task to multiple students
 router.put("/:id/assign", async (req, res) => {
-  const { studentIds } = req.body; // Expect an array of student IDs
+  const { studentIds } = req.body;
 
   try {
     const task = await Task.findById(req.params.id);
@@ -58,12 +57,13 @@ router.put("/:id/assign", async (req, res) => {
           throw new Error(`Student with ID ${studentId} not found`);
         }
 
-        // Create a new task instance for each student
+        // Create a new task instance for each student with all task properties
         const newTask = new Task({
           name: task.name,
           reward: task.reward,
+          category: task.category,
           assignedTo: studentId,
-          status: "nan", // Reset status to "not assigned"
+          status: "nan",
         });
 
         await newTask.save();
@@ -77,7 +77,7 @@ router.put("/:id/assign", async (req, res) => {
   }
 });
 
-// Mark a task as completed (student action)
+// Mark a task as completed
 router.put("/:id/complete", async (req, res) => {
   try {
     const task = await Task.findById(req.params.id);
@@ -88,7 +88,7 @@ router.put("/:id/complete", async (req, res) => {
     }
 
     task.completed = true;
-    task.status = "pending"; // Set status to pending for teacher approval
+    task.status = "pending";
     await task.save();
     res.json(task);
   } catch (err) {
@@ -96,8 +96,7 @@ router.put("/:id/complete", async (req, res) => {
   }
 });
 
-// Approve or reject a task (teacher action)
-// Update the approve task endpoint in tasks.js
+// Approve or reject a task
 router.put("/:id/approve", async (req, res) => {
   const { status, comment } = req.body;
 
@@ -113,22 +112,18 @@ router.put("/:id/approve", async (req, res) => {
     task.teacherComment = comment || "";
 
     if (status === "approved") {
-      // Add reward to the student's balance
       student.balance += task.reward;
       student.completedTasks += 1;
 
-      // Get level configuration
       const levelConfig = await LevelConfig.findOne({ level: student.level });
       if (!levelConfig) {
         return res.status(500).json({ error: "Level configuration not found" });
       }
 
-      // Check if student has completed required tasks for current level
       if (student.completedTasks >= levelConfig.tasksRequired) {
         student.level += 1;
         student.completedTasks = 0;
 
-        // Get reward for next level
         const nextLevelConfig = await LevelConfig.findOne({ level: student.level });
         if (nextLevelConfig) {
           student.balance += nextLevelConfig.reward;
@@ -148,7 +143,7 @@ router.put("/:id/approve", async (req, res) => {
         student: task.assignedTo,
         type: "Earned",
         amount: task.reward,
-        description: `Completed task: ${task.name}`,
+        description: `Completed task: ${task.name} (${task.category})`,
       });
     }
 
@@ -159,11 +154,13 @@ router.put("/:id/approve", async (req, res) => {
     res.status(500).json({ error: "Failed to update task status", details: err.message });
   }
 });
+
 // Delete a task
 router.delete("/:id", async (req, res) => {
   const taskId = req.params.id;
 
   try {
+    // Only delete the specific task instance, not all tasks with the same name
     const deletedTask = await Task.findByIdAndDelete(taskId);
     if (!deletedTask) {
       return res.status(404).json({ error: "Task not found" });
