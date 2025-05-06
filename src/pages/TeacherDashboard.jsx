@@ -273,7 +273,7 @@ const TeacherDashboard = () => {
     }
 
     try {
-      await axios.post(`${process.env.REACT_APP_API_URL}/api/tasks`, newTask);
+      await axios.post("https://moolandia-mern-app.onrender.com/api/tasks", newTask);
       // Fetch the updated tasks list from the backend
       const tasksResponse = await fetch("https://moolandia-mern-app.onrender.com/api/tasks");
       const tasksData = await tasksResponse.json();
